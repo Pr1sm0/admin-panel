@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
-import { getAllUsers } from '../db/queries/user';
+import { signupUser, loginUser } from '../db/queries/user';
 
 const routerOpts: Router.IRouterOptions = {
   prefix: '/users',
@@ -8,8 +8,19 @@ const routerOpts: Router.IRouterOptions = {
 
 const router: Router = new Router(routerOpts);
 
-router.get('/', async (ctx: Koa.Context) => {
-  ctx.response.body = await getAllUsers();
+// signup user
+
+router.post('/signup', async (ctx: Koa.Context) => {
+  const user = ctx.request.body;
+  ctx.response.body = await signupUser(user);
+})
+
+// login user
+
+router.post('/login', async (ctx: Koa.Context) => {
+  const email = ctx.request.body.email;
+  const password = ctx.request.body.password;
+  ctx.response.body = await loginUser(email, password);
 })
 
 export default router;
