@@ -1,6 +1,7 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import { createItem, deleteItem, editItem, getAllItems, getItem } from '../db/queries/item';
+import authJwt from '../middleware/authJwt';
 
 const routerOpts: Router.IRouterOptions = {
   prefix: '/items',
@@ -23,14 +24,14 @@ router.get('/:itemId', async (ctx: Koa.Context) => {
 
 // create item
 
-router.post('/item', async (ctx: Koa.Context) => {
+router.post('/item', authJwt.verifyToken, authJwt.isAdmin, async (ctx: Koa.Context) => {
   const item = ctx.request.body;
   ctx.response.body = await createItem(item);
 })
 
 // edit item
 
-router.put('/:itemId', async (ctx: Koa.Context) => {
+router.put('/:itemId', authJwt.verifyToken, authJwt.isAdmin, async (ctx: Koa.Context) => {
   const id = Number(ctx.params.itemId);
   const item = ctx.request.body;
   ctx.response.body = await editItem(id, item);
@@ -38,7 +39,7 @@ router.put('/:itemId', async (ctx: Koa.Context) => {
 
 // delete item
 
-router.delete('/:itemId', async (ctx: Koa.Context) => {
+router.delete('/:itemId', authJwt.verifyToken, authJwt.isAdmin, async (ctx: Koa.Context) => {
   const id = Number(ctx.params.itemId);
   ctx.response.body = await deleteItem(id);
 })
