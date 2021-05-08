@@ -7,12 +7,7 @@ const routerOpts: Router.IRouterOptions = {
 
 const router: Router = new Router(routerOpts);
 
-// signup user
-
 router.post('/signup', userControllers.signupC)
-
-// login user
-
 router.post('/signin', userControllers.signinC)
 
 export default router;

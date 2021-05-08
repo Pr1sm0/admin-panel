@@ -23,6 +23,7 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^10.0.0",
     "pg": "^8.6.0",
+    "pg-cursor": "^2.6.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
