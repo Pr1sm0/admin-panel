@@ -2,7 +2,7 @@ import { Item } from '../../interfaces';
 import pool from '../dbConnector';
 const Cursor = require('pg-cursor');
 
-async function pagination() {
+export async function pagination() {
   const BATCH_SIZE = 100;
   const client = await pool.connect();
   const cursor = client.query(new Cursor('SELECT * FROM items'));
@@ -14,9 +14,9 @@ async function pagination() {
           return reject(err);
         }
         if (!rows.length) {
-          return resolve('Pagination is finished');
+          return resolve(rows);
         }
-        console.log(rows);
+        resolve(rows);
         return read();
       });
     })();
@@ -26,8 +26,9 @@ async function pagination() {
 export async function getAllItems() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items');
+    const res = await client.query('SELECT * FROM items');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -36,8 +37,9 @@ export async function getAllItems() {
 export async function getItem(id: number) {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items WHERE id=$1', [id]);
+    const res = await client.query('SELECT * FROM items WHERE id=$1', [id]);
     client.release();
+    return res.rows[0];
   } catch (err) {
     client.release();
   }
@@ -81,8 +83,9 @@ export async function deleteItem(id: number) {
 export async function sortItemsByNameAsc() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items ORDER BY name');
+    const res = await client.query('SELECT * FROM items ORDER BY name');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -91,8 +94,9 @@ export async function sortItemsByNameAsc() {
 export async function sortItemsByNameDesc() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items ORDER BY name DESC');
+    const res = await client.query('SELECT * FROM items ORDER BY name DESC');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -101,8 +105,9 @@ export async function sortItemsByNameDesc() {
 export async function sortItemsByPriceAsc() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items ORDER BY price');
+    const res = await client.query('SELECT * FROM items ORDER BY price');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -111,8 +116,9 @@ export async function sortItemsByPriceAsc() {
 export async function sortItemsByPriceDesc() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items ORDER BY price DESC');
+    const res = await client.query('SELECT * FROM items ORDER BY price DESC');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -121,8 +127,9 @@ export async function sortItemsByPriceDesc() {
 export async function sortItemsByDateAsc() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items ORDER BY created_at');
+    const res = await client.query('SELECT * FROM items ORDER BY created_at');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -131,8 +138,9 @@ export async function sortItemsByDateAsc() {
 export async function sortItemsByDateDesc() {
   const client = await pool.connect();
   try {
-    await client.query('SELECT * FROM items ORDER BY created_at DESC');
+    const res = await client.query('SELECT * FROM items ORDER BY created_at DESC');
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
@@ -141,8 +149,9 @@ export async function sortItemsByDateDesc() {
 export async function findItemsByName(name: string) {
   const client = await pool.connect();
   try {
-    await client.query("SELECT * FROM items WHERE name LIKE '%$1%'", [name]);
+    const res = await client.query("SELECT * FROM items WHERE name LIKE '%$1%'", [name]);
     client.release();
+    return res.rows;
   } catch (err) {
     client.release();
   }
