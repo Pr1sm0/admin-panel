@@ -3,7 +3,7 @@ import * as Logger from 'koa-logger';
 import * as bodyParser from 'koa-bodyparser';
 import * as winston from 'winston';
 import * as cors from "@koa/cors";
-import router from './controllers/index';
+import router from './routes/index';
 
 const app: Koa = new Koa();
 
