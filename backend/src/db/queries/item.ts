@@ -115,3 +115,13 @@ export async function sortItemsByDateDesc() {
     client.release();
   }
 }
+
+export async function findItemsByName(name: string) {
+  const client = await pool.connect();
+  try {
+    await client.query("SELECT * FROM items WHERE name LIKE '%$1%'", [name]);
+    client.release();
+  } catch (err) {
+    client.release();
+  }
+}
