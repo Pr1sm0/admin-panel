@@ -1,3 +1,4 @@
+import { logger } from '../../app';
 import { User } from '../../interfaces';
 import pool from '../dbConnector';
 
@@ -13,6 +14,7 @@ export async function createUser(user: User) {
     client.release();
   } catch (err) {
     client.release();
+    logger.log('error', err);
   }
 }
 
@@ -28,6 +30,7 @@ export async function getUserByEmail(email: string) {
     return user;
   } catch (err) {
     client.release();
+    logger.log('error', err);
   }
 }
 
@@ -43,6 +46,7 @@ export async function getUserById(id: number) {
     return user;
   } catch (err) {
     client.release();
+    logger.log('error', err);
   }
 }
 
@@ -57,5 +61,6 @@ export async function updateUserToken(token: string, userId: number) {
     return res.rows[0];
   } catch (err) {
     client.release();
+    logger.log('error', err);
   }
 }

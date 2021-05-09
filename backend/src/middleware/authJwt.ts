@@ -1,8 +1,8 @@
 import * as Koa from 'koa';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';  
-import { User } from '../interfaces';
 import { getUserById } from '../db/queries/user';
+import { logger } from '../app';
 
 dotenv.config();
 
@@ -14,6 +14,7 @@ const verifyToken = (ctx: Koa.Context, next: () => Promise<any>) => {
   try {
     ctx.request.body.jwtPayload = jwt.verify(token, secret);
   } catch (err) {
+    logger.log('error', err);
     ctx.throw(err.status || 403, err.text);
   }
   next();

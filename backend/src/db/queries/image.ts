@@ -1,3 +1,4 @@
+import { logger } from '../../app';
 import { Image } from '../../interfaces';
 import pool from '../dbConnector';
 
@@ -9,6 +10,7 @@ export async function getAllImagesByItemId(itemId: number) {
     return res.rows;
   } catch (err) {
     client.release();
+    logger.log('error', new Error(err));
   }
 }
 
@@ -20,6 +22,7 @@ export async function getImageByItemId(itemId: number) {
     return res.rows[0];
   } catch (err) {
     client.release();
+    logger.log('error', new Error(err));
   }
 }
 
@@ -34,6 +37,7 @@ export async function addImage(image: Image) {
     client.release();
   } catch (err) {
     client.release();
+    logger.log('error', new Error(err));
   }
 }
 
@@ -47,5 +51,6 @@ export async function deleteAllImagesByItemId(itemId: number) {
     client.release();
   } catch (err) {
     client.release();
+    logger.log('error', new Error(err));
   }
 }

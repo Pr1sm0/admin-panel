@@ -37,7 +37,7 @@ app.use(async (ctx: Koa.Context) => {
 // Application error logging.
 app.on('error', console.error);
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
   defaultMeta: { service: 'user-service' },

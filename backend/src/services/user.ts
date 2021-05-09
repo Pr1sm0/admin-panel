@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';  
 import { createUser, getUserByEmail, updateUserToken } from '../db/queries/user';
+import { logger } from '../app';
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ const checkPassword = (password: string, userPassword: string) => {
   return new Promise((resolve, reject) =>
     bcrypt.compare(password, userPassword, (err, response) => {
         if (err) {
+          logger.log('error', err);
           reject(err)
         }
         else if (response) {
@@ -52,7 +54,7 @@ export async function signup(user: User) {
     .then(user => {
       return user;
     })
-    .catch((err) => console.error(err))
+    .catch((err) => logger.log('error', err))
 }
 
 export async function signin(email: string, password: string) {
@@ -67,5 +69,5 @@ export async function signin(email: string, password: string) {
   .then(() => {
     return user;
   })
-  .catch((err) => console.error(err))
+  .catch((err) => logger.log('error', err))
 }
