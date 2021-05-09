@@ -16,3 +16,10 @@ export interface User {
   password: string;
   token: string;
 }
+
+export interface Image {
+  id?: number;
+  size: string;
+  itemId: number;
+  imageUrl: string;
+}
