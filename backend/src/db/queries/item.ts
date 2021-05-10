@@ -1,29 +1,6 @@
 import { logger } from '../../app';
 import { Item } from '../../interfaces';
 import pool from '../dbConnector';
-const Cursor = require('pg-cursor');
-
-export async function pagination() {
-  const BATCH_SIZE = 100;
-  const client = await pool.connect();
-  const cursor = client.query(new Cursor('SELECT * FROM items'));
-
-  return new Promise((resolve, reject) => {
-    (function read() {
-      cursor.read(BATCH_SIZE, async (err: any, rows: any) => {
-        if (err) {
-          logger.log('error', err);
-          return reject(err);
-        }
-        if (!rows.length) {
-          return resolve(rows);
-        }
-        resolve(rows);
-        return read();
-      });
-    })();
-  });
-}
 
 export async function getAllItems() {
   const client = await pool.connect();
