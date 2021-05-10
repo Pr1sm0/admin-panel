@@ -5,7 +5,10 @@ import pool from '../dbConnector';
 export async function getAllImagesByItemId(itemId: number) {
   const client = await pool.connect();
   try {
-    const res = await client.query("SELECT * FROM images WHERE item_id=$1 AND size='large'", [itemId]);
+    const res = await client.query(
+      "SELECT * FROM images WHERE item_id=$1 AND size='large'",
+      [itemId],
+    );
     client.release();
     return res.rows;
   } catch (err) {
@@ -17,7 +20,10 @@ export async function getAllImagesByItemId(itemId: number) {
 export async function getImageByItemId(itemId: number) {
   const client = await pool.connect();
   try {
-    const res = await client.query("SELECT * FROM images WHERE item_id=$1 AND size='small'", [itemId]);
+    const res = await client.query(
+      "SELECT * FROM images WHERE item_id=$1 AND size='small'",
+      [itemId],
+    );
     client.release();
     return res.rows[0];
   } catch (err) {
@@ -32,7 +38,7 @@ export async function addImage(image: Image) {
   try {
     await client.query(
       'INSERT INTO images (size, itemId, imageUrl) VALUES ($1, $2, $3) RETURNING *',
-      [size, itemId, imageUrl]
+      [size, itemId, imageUrl],
     );
     client.release();
   } catch (err) {
@@ -44,10 +50,7 @@ export async function addImage(image: Image) {
 export async function deleteAllImagesByItemId(itemId: number) {
   const client = await pool.connect();
   try {
-    await client.query(
-      'DELETE FROM images WHERE item_id = $1',
-      [itemId]
-    );
+    await client.query('DELETE FROM images WHERE item_id = $1', [itemId]);
     client.release();
   } catch (err) {
     client.release();

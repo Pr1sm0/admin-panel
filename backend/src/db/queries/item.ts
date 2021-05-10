@@ -32,7 +32,7 @@ export async function createItem(item: Item) {
   try {
     await client.query(
       'INSERT INTO items (name, price, description, created_at, updated_at, is_published) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [name, price, description, createdAt, updatedAt, isPublished]
+      [name, price, description, createdAt, updatedAt, isPublished],
     );
     client.release();
   } catch (err) {
@@ -45,7 +45,10 @@ export async function editItem(id: number, item: Item) {
   const { name, price, description, createdAt, updatedAt, isPublished } = item;
   const client = await pool.connect();
   try {
-    await client.query('UPDATE items SET name = $1, price = $2, description = $3, created_at = $4, updated_at = $5, is_published = $6 WHERE id = $7 RETURNING *', [name, price, description, createdAt, updatedAt, isPublished, id]);
+    await client.query(
+      'UPDATE items SET name = $1, price = $2, description = $3, created_at = $4, updated_at = $5, is_published = $6 WHERE id = $7 RETURNING *',
+      [name, price, description, createdAt, updatedAt, isPublished, id],
+    );
     client.release();
   } catch (err) {
     client.release();
@@ -127,7 +130,9 @@ export async function sortItemsByDateAsc() {
 export async function sortItemsByDateDesc() {
   const client = await pool.connect();
   try {
-    const res = await client.query('SELECT * FROM items ORDER BY created_at DESC');
+    const res = await client.query(
+      'SELECT * FROM items ORDER BY created_at DESC',
+    );
     client.release();
     return res.rows;
   } catch (err) {
@@ -139,7 +144,10 @@ export async function sortItemsByDateDesc() {
 export async function findItemsByName(name: string) {
   const client = await pool.connect();
   try {
-    const res = await client.query("SELECT * FROM items WHERE name LIKE '%$1%'", [name]);
+    const res = await client.query(
+      "SELECT * FROM items WHERE name LIKE '%$1%'",
+      [name],
+    );
     client.release();
     return res.rows;
   } catch (err) {

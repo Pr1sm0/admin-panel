@@ -2,7 +2,7 @@ import * as Koa from 'koa';
 import * as Logger from 'koa-logger';
 import * as bodyParser from 'koa-bodyparser';
 import * as winston from 'winston';
-import * as cors from "@koa/cors";
+import * as cors from '@koa/cors';
 import router from './routes/index';
 
 const app: Koa = new Koa();
@@ -56,9 +56,11 @@ export const logger = winston.createLogger({
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-  }));
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.simple(),
+    }),
+  );
 }
 
 export default app;

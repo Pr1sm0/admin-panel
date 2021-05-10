@@ -8,13 +8,28 @@ const routerOpts: Router.IRouterOptions = {
 
 const router: Router = new Router(routerOpts);
 
-router.get('/', itemControllers.getAllItemsC)
-router.get('/:itemId', itemControllers.getItemByIdC)
+router.get('/', itemControllers.getAllItemsC);
+router.get('/:itemId', itemControllers.getItemByIdC);
 
-router.post('/', authJwt.verifyToken, authJwt.isAdmin, itemControllers.createItemC)
+router.post(
+  '/',
+  authJwt.verifyToken,
+  authJwt.isAdmin,
+  itemControllers.createItemC,
+);
 
-router.put('/:itemId', authJwt.verifyToken, authJwt.isAdmin, itemControllers.editItemC)
+router.put(
+  '/:itemId',
+  authJwt.verifyToken,
+  authJwt.isAdmin,
+  itemControllers.editItemC,
+);
 
-router.delete('/:itemId', authJwt.verifyToken, authJwt.isAdmin, itemControllers.deleteItemC)
+router.delete(
+  '/:itemId',
+  authJwt.verifyToken,
+  authJwt.isAdmin,
+  itemControllers.deleteItemC,
+);
 
 export default router;
