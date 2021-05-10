@@ -1,5 +1,5 @@
 import * as Koa from 'koa';
-import { signup, signin } from '../services/user';
+import { signup, signin } from '../services/auth';
 
 // signup user
 
@@ -16,9 +16,9 @@ const signinC = async (ctx: Koa.Context) => {
   ctx.response.body = await signin(email, password);
 }
 
-const userControllers = {
+const authControllers = {
   signupC: signupC,
   signinC: signinC,
 };
 
-export default userControllers;
+export default authControllers;
