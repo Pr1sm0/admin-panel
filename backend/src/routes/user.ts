@@ -2,7 +2,7 @@ import * as Router from 'koa-router';
 import userControllers from '../controllers/user';
 
 const routerOpts: Router.IRouterOptions = {
-  prefix: '/users',
+  prefix: '/api/v1/users',
 };
 
 const router: Router = new Router(routerOpts);

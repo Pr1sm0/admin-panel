@@ -17,9 +17,9 @@ async function hashPassword(password: string) {
   )
 }
 
-const createToken = (userId: number) => {
+const createToken = (userId: number, role: string) => {
   return new Promise((resolve, reject) => {
-    jwt.sign({ id: userId }, secret, {
+    jwt.sign({ id: userId, role: role }, secret, {
       expiresIn: 86400 // 24 hours
     }, (err, data) => {
       err ? reject(err) : resolve(data)
@@ -48,7 +48,7 @@ export async function signup(user: User) {
     .then((hashedPassword: string) => {
       user.password = hashedPassword
     })
-    .then(() => createToken(user.id))
+    .then(() => createToken(user.id, user.role))
     .then((token: string) => user.token = token)
     .then(() => createUser(user))
     .then(user => {
@@ -64,7 +64,7 @@ export async function signin(email: string, password: string) {
     user = foundUser
     return checkPassword(password, foundUser.password)
   })
-  .then(() => createToken(user.id))
+  .then(() => createToken(user.id, user.role))
   .then((token: string) => updateUserToken(token, user.id))
   .then(() => {
     return user;

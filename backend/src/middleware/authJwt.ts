@@ -1,7 +1,6 @@
 import * as Koa from 'koa';
 import * as dotenv from 'dotenv';
-import * as jwt from 'jsonwebtoken';  
-import { getUserById } from '../db/queries/user';
+import * as jwt from 'jsonwebtoken';
 import { logger } from '../app';
 
 dotenv.config();
@@ -21,13 +20,12 @@ const verifyToken = (ctx: Koa.Context, next: () => Promise<any>) => {
 };
 
 const isAdmin = (ctx: Koa.Context, next: () => Promise<any>) => {
-  getUserById(ctx.request.body.id).then(user => {
-      if (user.role === "admin") {
-        next();
-        return;
-      }
-      ctx.throw(403, 'Require Admin Role!');
-    });
+  const role = ctx.request.body.jwtPayload.role;
+  if (role === 'admin') {
+    next();
+    return;
+  }
+  ctx.throw(403, 'Require admin role!');
 };
 
 const authJwt = {
