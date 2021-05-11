@@ -1,3 +1,4 @@
+import { Context, DefaultState } from 'koa';
 import * as Router from 'koa-router';
 import itemControllers from '../controllers/item';
 import authJwt from '../middleware/authJwt';
@@ -6,30 +7,30 @@ const routerOpts: Router.IRouterOptions = {
   prefix: '/api/v1/items',
 };
 
-const router: Router = new Router(routerOpts);
+const router = new Router<DefaultState, Context>(routerOpts);
 
-router.get('/', itemControllers.getAllItemsC);
-router.get('/:itemId', itemControllers.getItemByIdC);
+router.get('/', itemControllers.getAllItemsController);
+router.get('/:itemId', itemControllers.getItemByIdController);
 
 router.post(
   '/',
   authJwt.verifyToken,
   authJwt.isAdmin,
-  itemControllers.createItemC,
+  itemControllers.createItemController,
 );
 
 router.put(
   '/:itemId',
   authJwt.verifyToken,
   authJwt.isAdmin,
-  itemControllers.editItemC,
+  itemControllers.editItemController,
 );
 
 router.delete(
   '/:itemId',
   authJwt.verifyToken,
   authJwt.isAdmin,
-  itemControllers.deleteItemC,
+  itemControllers.deleteItemController,
 );
 
 export default router;

@@ -7,6 +7,10 @@ import router from './routes/index';
 
 const app: Koa = new Koa();
 
+const PRODUCTION = 'production';
+const ERROR_EVENT = 'error';
+const INTERNAL_SERVER_ERROR = 500;
+
 app.use(cors());
 
 app.use(bodyParser());
@@ -22,10 +26,10 @@ app.use(async (ctx: Koa.Context, next: () => Promise<any>) => {
   try {
     await next();
   } catch (error) {
-    ctx.status = error.statusCode || error.status || 500;
+    ctx.status = error.statusCode || error.status || INTERNAL_SERVER_ERROR;
     error.status = ctx.status;
     ctx.body = { error };
-    ctx.app.emit('error', error, ctx);
+    ctx.app.emit(ERROR_EVENT, error, ctx);
   }
 });
 
@@ -35,7 +39,7 @@ app.use(async (ctx: Koa.Context) => {
 });
 
 // Application error logging.
-app.on('error', console.error);
+app.on(ERROR_EVENT, console.error);
 
 export const logger = winston.createLogger({
   level: 'info',
@@ -55,7 +59,7 @@ export const logger = winston.createLogger({
 // If we're not in production then log to the `console` with the format:
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== PRODUCTION) {
   logger.add(
     new winston.transports.Console({
       format: winston.format.simple(),

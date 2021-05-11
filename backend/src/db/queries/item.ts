@@ -2,6 +2,8 @@ import { logger } from '../../app';
 import { Item } from '../../interfaces';
 import pool from '../dbConnector';
 
+const ERROR_LEVEL = 'error';
+
 export async function getAllItems() {
   const client = await pool.connect();
   try {
@@ -10,7 +12,7 @@ export async function getAllItems() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -22,7 +24,7 @@ export async function getItem(id: number) {
     return res.rows[0];
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -37,7 +39,7 @@ export async function createItem(item: Item) {
     client.release();
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -52,7 +54,7 @@ export async function editItem(id: number, item: Item) {
     client.release();
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -63,7 +65,7 @@ export async function deleteItem(id: number) {
     client.release();
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -75,7 +77,7 @@ export async function sortItemsByNameAsc() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -87,7 +89,7 @@ export async function sortItemsByNameDesc() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -99,7 +101,7 @@ export async function sortItemsByPriceAsc() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -111,7 +113,7 @@ export async function sortItemsByPriceDesc() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -123,7 +125,7 @@ export async function sortItemsByDateAsc() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -137,7 +139,7 @@ export async function sortItemsByDateDesc() {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -152,6 +154,6 @@ export async function findItemsByName(name: string) {
     return res.rows;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }

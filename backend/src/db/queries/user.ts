@@ -2,6 +2,8 @@ import { logger } from '../../app';
 import { User } from '../../interfaces';
 import pool from '../dbConnector';
 
+const ERROR_LEVEL = 'error';
+
 export async function createUser(user: User) {
   const { name, role, email, password, token } = user;
 
@@ -14,7 +16,7 @@ export async function createUser(user: User) {
     client.release();
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -25,11 +27,10 @@ export async function getUserByEmail(email: string) {
       email,
     ]);
     client.release();
-    const user = res.rows[0];
-    return user;
+    return res.rows[0];
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -42,7 +43,7 @@ export async function getUserById(id: number) {
     return user;
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
 
@@ -57,6 +58,6 @@ export async function updateUserToken(token: string, userId: number) {
     return res.rows[0];
   } catch (err) {
     client.release();
-    logger.log('error', err);
+    logger.log(ERROR_LEVEL, err);
   }
 }
