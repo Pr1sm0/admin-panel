@@ -1,62 +1,27 @@
-import { logger } from '../../app';
 import { User } from '../../interfaces';
-import pool from '../dbConnector';
-
-const ERROR_LEVEL = 'error';
+import { returnMany, returnSingle } from './templates';
 
 export async function createUser(user: User) {
   const { name, role, email, password, token } = user;
-
-  const client = await pool.connect();
-  try {
-    await client.query(
-      'INSERT INTO users (name, role, email, password, token) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, role, email, password, token],
-    );
-    client.release();
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'INSERT INTO users (name, role, email, password, token) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+  const values = [name, role, email, password, token];
+  return returnSingle(query, values);
 }
 
 export async function getUserByEmail(email: string) {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM users WHERE email=$1', [
-      email,
-    ]);
-    client.release();
-    return res.rows[0];
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM users WHERE email=$1';
+  const values = [email];
+  return returnSingle(query, values);
 }
 
 export async function getUserById(id: number) {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM users WHERE id=$1', [id]);
-    client.release();
-    return res.rows[0];
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM users WHERE id=$1';
+  const values = [id];
+  return returnSingle(query, values);
 }
 
 export async function updateUserToken(token: string, userId: number) {
-  const client = await pool.connect();
-  try {
-    const res = await client.query(
-      'UPDATE users SET token = $1 WHERE id = $2 RETURNING *',
-      [token, userId],
-    );
-    client.release();
-    return res.rows[0];
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'UPDATE users SET token = $1 WHERE id = $2 RETURNING *';
+  const values = [token, userId];
+  return returnSingle(query, values);
 }
