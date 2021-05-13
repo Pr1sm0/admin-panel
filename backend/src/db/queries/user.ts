@@ -39,8 +39,7 @@ export async function getUserById(id: number) {
   try {
     const res = await client.query('SELECT * FROM users WHERE id=$1', [id]);
     client.release();
-    const user = res.rows[0];
-    return user;
+    return res.rows[0];
   } catch (err) {
     client.release();
     logger.log(ERROR_LEVEL, err);

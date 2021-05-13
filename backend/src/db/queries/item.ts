@@ -4,16 +4,21 @@ import pool from '../dbConnector';
 
 const ERROR_LEVEL = 'error';
 
-export async function getAllItems() {
+async function getAllQuery(query: string) {
   const client = await pool.connect();
   try {
-    const res = await client.query('SELECT * FROM items');
+    const res = await client.query(query);
     client.release();
     return res.rows;
   } catch (err) {
     client.release();
     logger.log(ERROR_LEVEL, err);
   }
+}
+
+export async function getAllItems() {
+  const query = 'SELECT * FROM items';
+  getAllQuery(query);
 }
 
 export async function getItem(id: number) {
@@ -70,77 +75,33 @@ export async function deleteItem(id: number) {
 }
 
 export async function sortItemsByNameAsc() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM items ORDER BY name');
-    client.release();
-    return res.rows;
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM items ORDER BY name';
+  getAllQuery(query);
 }
 
 export async function sortItemsByNameDesc() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM items ORDER BY name DESC');
-    client.release();
-    return res.rows;
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM items ORDER BY name DESC';
+  getAllQuery(query);
 }
 
 export async function sortItemsByPriceAsc() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM items ORDER BY price');
-    client.release();
-    return res.rows;
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM items ORDER BY price';
+  getAllQuery(query);
 }
 
 export async function sortItemsByPriceDesc() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM items ORDER BY price DESC');
-    client.release();
-    return res.rows;
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM items ORDER BY price DESC';
+  getAllQuery(query);
 }
 
 export async function sortItemsByDateAsc() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query('SELECT * FROM items ORDER BY created_at');
-    client.release();
-    return res.rows;
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM items ORDER BY created_at';
+  getAllQuery(query);
 }
 
 export async function sortItemsByDateDesc() {
-  const client = await pool.connect();
-  try {
-    const res = await client.query(
-      'SELECT * FROM items ORDER BY created_at DESC',
-    );
-    client.release();
-    return res.rows;
-  } catch (err) {
-    client.release();
-    logger.log(ERROR_LEVEL, err);
-  }
+  const query = 'SELECT * FROM items ORDER BY created_at DESC';
+  getAllQuery(query);
 }
 
 export async function findItemsByName(name: string) {
