@@ -77,3 +77,8 @@ export const findItemsByName = (name: string) => {
   const values = [name];
   return returnMany(query, values);
 };
+
+export const countAllItems = () => {
+  const query = 'SELECT count(*) FROM items';
+  return returnSingle(query);
+};
