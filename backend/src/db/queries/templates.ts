@@ -3,7 +3,7 @@ import { logger } from '../../app';
 
 const ERROR_LEVEL = 'error';
 
-export async function returnMany(query: string, values?: any[]) {
+export const returnMany = async (query: string, values?: any[]) => {
   const client = await pool.connect();
   try {
     const res = await client.query(query, values);
@@ -13,9 +13,9 @@ export async function returnMany(query: string, values?: any[]) {
     client.release();
     logger.log(ERROR_LEVEL, err);
   }
-}
+};
 
-export async function returnSingle(query: string, values?: any[]) {
+export const returnSingle = async (query: string, values?: any[]) => {
   const client = await pool.connect();
   try {
     const res = await client.query(query, values);
@@ -25,4 +25,4 @@ export async function returnSingle(query: string, values?: any[]) {
     client.release();
     logger.log(ERROR_LEVEL, err);
   }
-}
+};
