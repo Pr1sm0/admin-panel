@@ -16,7 +16,7 @@ export const getImageByItemId = (itemId: number) => {
 export const addImage = (image: Image) => {
   const { size, itemId, imageUrl } = image;
   const query =
-    'INSERT INTO images (size, itemId, imageUrl) VALUES ($1, $2, $3) RETURNING *';
+    'INSERT INTO images (size, item_id, image_url) VALUES ($1, $2, $3) RETURNING *';
   const values = [size, itemId, imageUrl];
   return returnSingle(query, values);
 };

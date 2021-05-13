@@ -12,7 +12,7 @@ const WRONG_FILE_FORMAT_ERROR_MESSAGE = 'Please, upload jpg, jpeg or png file.';
 
 const storage = multer.diskStorage({
   destination: function (ctx: any, file: any, cb: any) {
-    cb(null, path.join(__dirname, '/public/images/'));
+    cb(null, path.join(__dirname, '../../public/images/'));
   },
   filename: function (ctx: any, file: any, cb: any) {
     let type = file.originalname.split('.')[1];
