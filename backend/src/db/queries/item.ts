@@ -78,7 +78,14 @@ export const findItemsByName = (name: string) => {
   return returnMany(query, values);
 };
 
-export const countAllItems = () => {
-  const query = 'SELECT count(*) FROM items';
-  return returnSingle(query);
+export const countAllItemsWithPagination = (condition: string) => {
+  const query = 'SELECT count(*) FROM items WHERE name LIKE $1';
+  const values = [condition];
+  return returnSingle(query, values);
+};
+
+export const getAllItemsWithPagination = (condition: string, offset: number, limit: number) => {
+  const query = 'SELECT * FROM items WHERE name LIKE $1 ORDER BY id OFFSET $2 LIMIT $3';
+  const values = [condition, offset, limit];
+  return returnMany(query, values);
 };
