@@ -15,15 +15,14 @@ const getPagingData = (numberOfItems: number, items: Item[], page: number, limit
   return { numberOfItems, items, totalPages, currentPage };
 };
 
-// Retrieve all Tutorials from the database.
 export const getAll = async (query: any) => {
-  const { page, size, title } = query;
-  const condition = title ? `%${title}%` : '%%';
+  const { page, size, name } = query;
+  const nameCondition = name ? `%${name}%` : '%%';
 
   const { limit, offset } = getPagination(page, size);
 
-  const countAll = await countAllItemsWithPagination(condition);
-  const items = await getAllItemsWithPagination(condition, offset, limit);
+  const countAll = await countAllItemsWithPagination(nameCondition);
+  const items = await getAllItemsWithPagination(nameCondition, limit, offset);
   
   const numberOfItems = countAll.count;
 

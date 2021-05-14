@@ -84,8 +84,8 @@ export const countAllItemsWithPagination = (condition: string) => {
   return returnSingle(query, values);
 };
 
-export const getAllItemsWithPagination = (condition: string, offset: number, limit: number) => {
-  const query = 'SELECT * FROM items WHERE name LIKE $1 ORDER BY id OFFSET $2 LIMIT $3';
-  const values = [condition, offset, limit];
+export const getAllItemsWithPagination = (nameCondition: string, limit: number, offset: number) => {
+  const query = 'SELECT * FROM items WHERE name LIKE $1 ORDER BY id LIMIT $2 OFFSET $3';
+  const values = [nameCondition, limit, offset];
   return returnMany(query, values);
 };
