@@ -78,14 +78,20 @@ export const findItemsByName = (name: string) => {
   return returnMany(query, values);
 };
 
-export const countAllItemsWithPagination = (condition: string) => {
+export const countAllItemsWithPagination = async (condition: string) => {
   const query = 'SELECT count(*) FROM items WHERE name LIKE $1';
   const values = [condition];
-  return returnSingle(query, values);
+  const count = await returnSingle(query, values);
+  return count.count;
 };
 
-export const getAllItemsWithPagination = (nameCondition: string, limit: number, offset: number) => {
-  const query = 'SELECT * FROM items WHERE name LIKE $1 ORDER BY id LIMIT $2 OFFSET $3';
+export const getAllItemsWithPagination = (
+  nameCondition: string,
+  limit: number,
+  offset: number,
+) => {
+  const query =
+    'SELECT * FROM items WHERE name LIKE $1 ORDER BY id LIMIT $2 OFFSET $3';
   const values = [nameCondition, limit, offset];
   return returnMany(query, values);
 };

@@ -15,17 +15,15 @@ const getPagingData = (numberOfItems: number, items: Item[], page: number, limit
   return { numberOfItems, items, totalPages, currentPage };
 };
 
-export const getAll = async (query: any) => {
+export const getPaginationData = async (query: any) => {
   const { page, size, name } = query;
   const nameCondition = name ? `%${name}%` : '%%';
 
   const { limit, offset } = getPagination(page, size);
 
-  const countAll = await countAllItemsWithPagination(nameCondition);
+  const numberOfItems = await countAllItemsWithPagination(nameCondition);
   const items = await getAllItemsWithPagination(nameCondition, limit, offset);
   
-  const numberOfItems = countAll.count;
-
   const response = getPagingData(numberOfItems, items, page, limit);
 
   return response;

@@ -6,7 +6,7 @@ import {
   getAllItems,
   getItem,
 } from '../db/queries/item';
-import { getAll } from '../services/pagination';
+import { getPaginationData } from '../services/pagination';
 
 const getAllItemsController = async (ctx: Koa.Context) => {
   ctx.response.body = await getAllItems();
@@ -35,7 +35,7 @@ const deleteItemController = async (ctx: Koa.Context) => {
 
 const getAllItemsPaginationController = async (ctx: Koa.Context) => {
   const queryParams = ctx.request.query;
-  ctx.response.body = await getAll(queryParams);
+  ctx.response.body = await getPaginationData(queryParams);
 };
 
 const itemControllers = {

@@ -12,8 +12,8 @@ const router = new Router<DefaultState, Context>(routerOpts);
 
 router.post(
   '/',
-  authJwt.verifyToken,
-  authJwt.isAdmin,
+  // authJwt.verifyToken,
+  // authJwt.isAdmin,
   upload.single('itemImage'),
   imageControllers.addImageController,
 );
