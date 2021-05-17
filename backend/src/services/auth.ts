@@ -67,26 +67,24 @@ const checkPassword = (password: string, userPassword: string) => {
 };
 
 export async function signup(user: User) {
-  hashPassword(user.password)
+  return hashPassword(user.password)
     .then((hashedPassword: string) => {
       user.password = hashedPassword;
     })
     .then(() => createToken(user.id, user.role))
     .then((token: string) => (user.token = token))
     .then(() => createUser(user))
-    .then((user) => user)
-    .catch((err) => logger.log(ERROR_LEVEL, err));
+    .then((user) => user);
 }
 
 export async function signin(email: string, password: string) {
   let user: User;
-  getUserByEmail(email)
+  return getUserByEmail(email)
     .then((foundUser) => {
       user = foundUser;
       return checkPassword(password, foundUser.password);
     })
     .then(() => createToken(user.id, user.role))
     .then((token: string) => updateUserToken(token, user.id))
-    .then(() => user)
-    .catch((err) => logger.log(ERROR_LEVEL, err));
+    .then(() => user);
 }
