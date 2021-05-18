@@ -74,7 +74,15 @@ export async function signup(user: User) {
     .then(() => createToken(user.id, user.role))
     .then((token: string) => (user.token = token))
     .then(() => createUser(user))
-    .then((user) => user);
+    .then((user) => {
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        token: user.token
+      }
+    });
 }
 
 export async function signin(email: string, password: string) {
@@ -86,5 +94,13 @@ export async function signin(email: string, password: string) {
     })
     .then(() => createToken(user.id, user.role))
     .then((token: string) => updateUserToken(token, user.id))
-    .then(() => user);
+    .then(() => {
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        token: user.token
+      }
+    });
 }
