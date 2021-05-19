@@ -3,7 +3,7 @@ export interface Item {
   name: string;
   price?: number;
   description: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  isPublished: Boolean;
+  created_at?: Date;
+  updated_at?: Date;
+  is_published: Boolean;
 }

@@ -11,7 +11,7 @@ export class AddItemComponent implements OnInit {
   item: Item = {
     name: '',
     description: '',
-    isPublished: false
+    is_published: false
   };
   submitted = false;
 
@@ -42,7 +42,7 @@ export class AddItemComponent implements OnInit {
     this.item = {
       name: '',
       description: '',
-      isPublished: false
+      is_published: false
     };
   }
 

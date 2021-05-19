@@ -13,24 +13,24 @@ export const getItem = (id: number) => {
 };
 
 export const createItem = (item: Item) => {
-  const { name, price, description, createdAt, updatedAt, isPublished } = item;
+  const { name, price, description, created_at, updated_at, is_published } = item;
   const query =
     'INSERT INTO items (name, price, description, created_at, updated_at, is_published) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
-  const values = [name, price, description, createdAt, updatedAt, isPublished];
+  const values = [name, price, description, created_at, updated_at, is_published];
   return returnSingle(query, values);
 };
 
 export const editItem = (id: number, item: Item) => {
-  const { name, price, description, createdAt, updatedAt, isPublished } = item;
+  const { name, price, description, created_at, updated_at, is_published } = item;
   const query =
     'UPDATE items SET name = $1, price = $2, description = $3, created_at = $4, updated_at = $5, is_published = $6 WHERE id = $7 RETURNING *';
   const values = [
     name,
     price,
     description,
-    createdAt,
-    updatedAt,
-    isPublished,
+    created_at,
+    updated_at,
+    is_published,
     id,
   ];
   return returnSingle(query, values);

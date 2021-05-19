@@ -11,8 +11,9 @@ import { Item } from 'src/app/models/item.model';
 export class ItemDetailsComponent implements OnInit {
   currentItem: Item = {
     name: '',
+    price: 0,
     description: '',
-    isPublished: false
+    is_published: false
   };
   message = '';
 
@@ -41,14 +42,15 @@ export class ItemDetailsComponent implements OnInit {
   updatePublished(status: boolean): void {
     const data = {
       name: this.currentItem.name,
+      price: this.currentItem.price,
       description: this.currentItem.description,
-      isPublished: status
+      is_published: status
     };
 
     this.itemService.update(this.currentItem.id, data)
       .subscribe(
         response => {
-          this.currentItem.isPublished = status;
+          this.currentItem.is_published = status;
           console.log(response);
           this.message = response.message;
         },

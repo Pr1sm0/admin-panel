@@ -53,15 +53,26 @@
     <div *ngIf="currentItem">
       <h4>Item</h4>
       <div>
-        <label><strong>Item:</strong></label> {{ currentItem.name }}
+        <label><strong>Name:</strong></label> {{ currentItem.name }}
+      </div>
+      <div>
+        <label><strong>Price:</strong></label> {{ currentItem.price | currency }}
       </div>
       <div>
         <label><strong>Description:</strong></label>
         {{ currentItem.description }}
       </div>
       <div>
+        <label><strong>Created At:</strong></label>
+        {{ currentItem.created_at }}
+      </div>
+      <div>
+        <label><strong>Updated At:</strong></label>
+        {{ currentItem.updated_at }}
+      </div>
+      <div>
         <label><strong>Status:</strong></label>
-        {{ currentItem.isPublished ? "Published" : "Pending" }}
+        {{ currentItem.is_published ? "Published" : "Unpublished" }}
       </div>
 
       <a

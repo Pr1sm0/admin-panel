@@ -14,8 +14,8 @@ const NOT_ADMIN_ERROR_MESSAGE = 'Require admin role!';
 const secret = process.env.JWT_SECRET;
 
 const verifyToken = (ctx: Koa.Context, next: () => Promise<any>) => {
-  if (!ctx.headers.authorization) ctx.throw(FORBIDDEN, NO_TOKEN_ERROR_MESSAGE);
-  const token = ctx.headers.authorization.split(' ')[1];
+  const token = String(ctx.headers['x-access-token']);
+  if (!token) ctx.throw(FORBIDDEN, NO_TOKEN_ERROR_MESSAGE);
   try {
     ctx.request.body.jwtPayload = jwt.verify(token, secret);
   } catch (err) {
