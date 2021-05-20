@@ -15,8 +15,8 @@ export class ItemListComponent implements OnInit {
 
   page = 1;
   count = 0;
-  pageSize = 3;
-  pageSizes = [3, 6, 9];
+  pageSize = 6;
+  pageSizes = [6, 9, 12];
 
   constructor(private itemService: ItemService) { }
 
@@ -78,18 +78,6 @@ export class ItemListComponent implements OnInit {
   setActiveItem(item: Item, index: number): void {
     this.currentItem = item;
     this.currentIndex = index;
-  }
-
-  removeAllItems(): void {
-    this.itemService.deleteAll()
-      .subscribe(
-        response => {
-          console.log(response);
-          this.refreshList();
-        },
-        error => {
-          console.log(error);
-        });
   }
 
   searchName(): void {

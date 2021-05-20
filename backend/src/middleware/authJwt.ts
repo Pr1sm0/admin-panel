@@ -13,25 +13,26 @@ const NOT_ADMIN_ERROR_MESSAGE = 'Require admin role!';
 
 const secret = process.env.JWT_SECRET;
 
-const verifyToken = (ctx: Koa.Context, next: () => Promise<any>) => {
+const verifyToken = async (ctx: Koa.Context, next: () => Promise<any>) => {
   const token = String(ctx.headers['x-access-token']);
   if (!token) ctx.throw(FORBIDDEN, NO_TOKEN_ERROR_MESSAGE);
   try {
     ctx.request.body.jwtPayload = jwt.verify(token, secret);
   } catch (err) {
     logger.log(ERROR_LEVEL, err);
-    ctx.throw(err.status || FORBIDDEN, err.text);
+    ctx.throw(err.status || FORBIDDEN, err.message);
   }
-  next();
+  await next();
 };
 
-const isAdmin = (ctx: Koa.Context, next: () => Promise<any>) => {
+const isAdmin = async (ctx: Koa.Context, next: () => Promise<any>) => {
   const role = ctx.request.body.jwtPayload.role;
   if (role === ADMIN_ROLE) {
-    next();
+    await next();
     return;
   }
-  ctx.throw(FORBIDDEN, NOT_ADMIN_ERROR_MESSAGE);
+  ctx.response.status = FORBIDDEN;
+  ctx.body = NOT_ADMIN_ERROR_MESSAGE;
 };
 
 const authJwt = {

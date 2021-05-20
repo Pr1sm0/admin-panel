@@ -1,4 +1,5 @@
 import { User } from '../interfaces';
+import * as Koa from 'koa';
 import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
@@ -14,11 +15,11 @@ dotenv.config();
 const TWENTY_FOUR_HOURS_IN_SECONDS = 86400;
 const SALT = 10;
 const ERROR_LEVEL = 'error';
-const WRONG_PASSWORD_ERROR_MESSAGE = 'Passwords do not match.';
+const WRONG_PASSWORD_ERROR_MESSAGE = 'Incorrect password.';
 
 const secret = process.env.JWT_SECRET;
 
-async function hashPassword(password: string) {
+const hashPassword = async (password: string) => {
   return new Promise((resolve, reject) =>
     bcrypt.hash(password, SALT, (err, hash) => {
       if (err) {
@@ -66,14 +67,14 @@ const checkPassword = (password: string, userPassword: string) => {
   );
 };
 
-export async function signup(user: User) {
+export const signup = async (ctx: Koa.Context, user: User) => {
   return hashPassword(user.password)
     .then((hashedPassword: string) => {
       user.password = hashedPassword;
     })
     .then(() => createToken(user.id, user.role))
     .then((token: string) => (user.token = token))
-    .then(() => createUser(user))
+    .then(() => createUser(ctx, user))
     .then((user) => {
       return {
         id: user.id,
@@ -85,15 +86,15 @@ export async function signup(user: User) {
     });
 }
 
-export async function signin(email: string, password: string) {
+export const signin = async (ctx: Koa.Context, email: string, password: string) => {
   let user: User;
-  return getUserByEmail(email)
+  return getUserByEmail(ctx, email)
     .then((foundUser) => {
       user = foundUser;
       return checkPassword(password, foundUser.password);
     })
     .then(() => createToken(user.id, user.role))
-    .then((token: string) => updateUserToken(token, user.id))
+    .then((token: string) => updateUserToken(ctx, token, user.id))
     .then(() => {
       return {
         id: user.id,
@@ -102,5 +103,6 @@ export async function signin(email: string, password: string) {
         role: user.role,
         token: user.token
       }
-    });
+    })
+    .catch((err) => ctx.throw(401, err.message));
 }
