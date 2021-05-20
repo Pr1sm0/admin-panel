@@ -1,9 +1,10 @@
 import pool from '../dbConnector';
+import * as Koa from 'koa';
 import { logger } from '../../app';
 
 const ERROR_LEVEL = 'error';
 
-export const returnMany = async (query: string, values?: any[]) => {
+export const returnMany = async (ctx: Koa.Context, query: string, values?: any[]) => {
   const client = await pool.connect();
   try {
     const res = await client.query(query, values);
@@ -12,10 +13,11 @@ export const returnMany = async (query: string, values?: any[]) => {
   } catch (err) {
     client.release();
     logger.log(ERROR_LEVEL, err);
+    ctx.throw(err.status, err.message);
   }
 };
 
-export const returnSingle = async (query: string, values?: any[]) => {
+export const returnSingle = async (ctx: Koa.Context, query: string, values?: any[]) => {
   const client = await pool.connect();
   try {
     const res = await client.query(query, values);
@@ -24,5 +26,6 @@ export const returnSingle = async (query: string, values?: any[]) => {
   } catch (err) {
     client.release();
     logger.log(ERROR_LEVEL, err);
+    ctx.throw(err.status, err.message);
   }
 };

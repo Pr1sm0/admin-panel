@@ -1,91 +1,91 @@
 import { Item } from '../../interfaces';
 import { returnMany, returnSingle } from './templates';
+import * as Koa from 'koa';
 
-export const getAllItems = () => {
+export const getAllItems = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const getItem = (id: number) => {
+export const getItem = (ctx: Koa.Context, id: number) => {
   const query = 'SELECT * FROM items WHERE id=$1';
   const values = [id];
-  return returnSingle(query, values);
+  return returnSingle(ctx, query, values);
 };
 
-export const createItem = (item: Item) => {
-  const { name, price, description, created_at, updated_at, is_published } = item;
+export const createItem = (ctx: Koa.Context, item: Item) => {
+  const { name, price, description, is_published } = item;
   const query =
-    'INSERT INTO items (name, price, description, created_at, updated_at, is_published) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
-  const values = [name, price, description, created_at, updated_at, is_published];
-  return returnSingle(query, values);
+    'INSERT INTO items (name, price, description, created_at, updated_at, is_published) VALUES ($1, $2, $3, NOW(), NOW(), $4) RETURNING *';
+  const values = [name, price, description, is_published];
+  return returnSingle(ctx, query, values);
 };
 
-export const editItem = (id: number, item: Item) => {
-  const { name, price, description, created_at, updated_at, is_published } = item;
+export const editItem = (ctx: Koa.Context, id: number, item: Item) => {
+  const { name, price, description, is_published } = item;
   const query =
-    'UPDATE items SET name = $1, price = $2, description = $3, created_at = $4, updated_at = $5, is_published = $6 WHERE id = $7 RETURNING *';
+    'UPDATE items SET name = $1, price = $2, description = $3, updated_at = NOW(), is_published = $4 WHERE id = $5 RETURNING *';
   const values = [
     name,
     price,
     description,
-    created_at,
-    updated_at,
     is_published,
     id,
   ];
-  return returnSingle(query, values);
+  return returnSingle(ctx, query, values);
 };
 
-export const deleteItem = (id: number) => {
-  const query = 'DELETE FROM items WHERE id = $1';
+export const deleteItem = (ctx: Koa.Context, id: number) => {
+  const query = 'DELETE FROM items WHERE id = $1 RETURNING *';
   const values = [id];
-  return returnSingle(query, values);
+  return returnSingle(ctx, query, values);
 };
 
-export const sortItemsByNameAsc = () => {
+export const sortItemsByNameAsc = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items ORDER BY name';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const sortItemsByNameDesc = () => {
+export const sortItemsByNameDesc = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items ORDER BY name DESC';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const sortItemsByPriceAsc = () => {
+export const sortItemsByPriceAsc = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items ORDER BY price';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const sortItemsByPriceDesc = () => {
+export const sortItemsByPriceDesc = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items ORDER BY price DESC';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const sortItemsByDateAsc = () => {
+export const sortItemsByDateAsc = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items ORDER BY created_at';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const sortItemsByDateDesc = () => {
+export const sortItemsByDateDesc = (ctx: Koa.Context) => {
   const query = 'SELECT * FROM items ORDER BY created_at DESC';
-  return returnMany(query);
+  return returnMany(ctx, query);
 };
 
-export const findItemsByName = (name: string) => {
+export const findItemsByName = (ctx: Koa.Context, name: string) => {
   const query = "SELECT * FROM items WHERE name LIKE '%$1%'";
   const values = [name];
-  return returnMany(query, values);
+  return returnMany(ctx, query, values);
 };
 
-export const countAllItemsWithPagination = async (condition: string) => {
+export const countAllItemsWithPagination = async (ctx: Koa.Context, condition: string) => {
   const query = 'SELECT count(*) FROM items WHERE name LIKE $1';
   const values = [condition];
-  const count = await returnSingle(query, values);
+  const count = await returnSingle(ctx, query, values);
   return count.count;
 };
 
 export const getAllItemsWithPagination = (
+  ctx: Koa.Context,
   nameCondition: string,
   limit: number,
   offset: number,
@@ -93,5 +93,5 @@ export const getAllItemsWithPagination = (
   const query =
     'SELECT * FROM items WHERE name LIKE $1 ORDER BY id LIMIT $2 OFFSET $3';
   const values = [nameCondition, limit, offset];
-  return returnMany(query, values);
+  return returnMany(ctx, query, values);
 };

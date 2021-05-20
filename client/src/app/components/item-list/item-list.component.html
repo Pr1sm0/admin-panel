@@ -64,11 +64,11 @@
       </div>
       <div>
         <label><strong>Created At:</strong></label>
-        {{ currentItem.created_at }}
+        {{ currentItem.created_at | date:'medium' }}
       </div>
       <div>
         <label><strong>Updated At:</strong></label>
-        {{ currentItem.updated_at }}
+        {{ currentItem.updated_at | date:'medium' }}
       </div>
       <div>
         <label><strong>Status:</strong></label>
@@ -90,10 +90,6 @@
   </div>
 
   <div class="mt-3">
-    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllItems()">
-      Remove All
-    </button>
-
     Items per Page:
     <select (change)="handlePageSizeChange($event)">
       <option *ngFor="let size of pageSizes" [ngValue]="size">

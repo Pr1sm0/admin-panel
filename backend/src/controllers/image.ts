@@ -6,7 +6,7 @@ import {
 const addImageController = async (ctx: Koa.Context) => {
   const image = ctx.request.body;
   image.imageUrl = ctx.request.file.path;
-  ctx.response.body = await addImage(image);
+  ctx.response.body = await addImage(ctx, image);
 };
 
 const imageControllers = {
