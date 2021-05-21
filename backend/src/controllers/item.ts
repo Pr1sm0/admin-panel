@@ -21,20 +21,20 @@ const createItemController = async (ctx: Koa.Context) => {
   const item = ctx.request.body;
   if (!item) {
     ctx.response.body = {
-      message: "Content can not be empty!"
+      message: 'Content can not be empty!',
     };
     return;
   }
 
-  try {
-    const res = await createItem(ctx, item);
+  const res = await createItem(ctx, item);
+  if (res) {
     ctx.response.body = {
       res,
       message: 'Item was created successfully.',
     };
-  } catch (err) {
+  } else {
     ctx.response.body = {
-      message: 'Error occured creating Item',
+      message: 'Cannot create Item.',
     };
   }
 };
@@ -42,42 +42,30 @@ const createItemController = async (ctx: Koa.Context) => {
 const editItemController = async (ctx: Koa.Context) => {
   const id = Number(ctx.params.itemId);
   const item = ctx.request.body;
-  try {
-    const res = await editItem(ctx, id, item);
-    if (res) {
-      ctx.response.body = {
-        res,
-        message: 'Item was updated successfully.',
-      };
-    } else {
-      ctx.response.body = {
-        message: `Cannot update Item with id=${id}. Maybe Item was not found or ctx.body is empty!`,
-      };
-    }
-  } catch (err) {
+  const res = await editItem(ctx, id, item);
+  if (res) {
     ctx.response.body = {
-      message: `Error occured updating Item with id=${id}`,
+      res,
+      message: 'Item was updated successfully.',
+    };
+  } else {
+    ctx.response.body = {
+      message: 'Cannot update Item.',
     };
   }
 };
 
 const deleteItemController = async (ctx: Koa.Context) => {
   const id = Number(ctx.params.itemId);
-  try {
-    const res = await deleteItem(ctx, id);
-    if (res) {
-      ctx.response.body = {
-        res,
-        message: 'Item was deleted successfully.',
-      };
-    } else {
-      ctx.response.body = {
-        message: `Cannot delete Item with id=${id}. Maybe Item was not found`,
-      };
-    }
-  } catch (err) {
+  const res = await deleteItem(ctx, id);
+  if (res) {
     ctx.response.body = {
-      message: `Error occured deleting Item with id=${id}`,
+      res,
+      message: 'Item was deleted successfully.',
+    };
+  } else {
+    ctx.response.body = {
+      message: 'Cannot delete Item.',
     };
   }
 };

@@ -1,49 +1,91 @@
 <div>
-  <div class="submit-form">
-    <div *ngIf="!submitted">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          required
-          [(ngModel)]="item.name"
-          name="name"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input
-          type="number"
-          class="form-control"
-          id="price"
-          required
-          [(ngModel)]="item.price"
-          name="price"
-          min="0.00"
-          step="0.01"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input
-          class="form-control"
-          id="description"
-          required
-          [(ngModel)]="item.description"
-          name="description"
-        />
-      </div>
-
-      <button (click)="saveItem()" class="btn btn-success">Submit</button>
+  <form
+    *ngIf="!submitted"
+    name="form"
+    (ngSubmit)="f.form.valid && saveItem()"
+    #f="ngForm"
+    novalidate
+  >
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        required
+        [(ngModel)]="item.name"
+        name="name"
+        #name="ngModel"
+      />
     </div>
 
-    <div *ngIf="submitted">
-      <h4>{{ message }}</h4>
-      <button class="btn btn-success" (click)="newItem()">Add another item</button>
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="name.errors && f.submitted"
+    >
+      Name is required!
     </div>
-  </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="price"
+        required
+        [(ngModel)]="item.price"
+        name="price"
+        min="0.00"
+        step="0.01"
+        #price="ngModel"
+      />
+    </div>
+
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="price.errors && f.submitted"
+    >
+      <div *ngIf="price.errors.required">Price is required!</div>
+      <div *ngIf="price.errors.min">Price must be a positive number!</div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        required
+        [(ngModel)]="item.description"
+        name="description"
+        rows="6"
+        #description="ngModel"
+      ></textarea>
+    </div>
+
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="description.errors && f.submitted"
+    >
+      Description is required!
+    </div>
+
+    <div class="form-group">
+      <label for="is_published">Publish</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="is_published"
+        [(ngModel)]="item.is_published"
+        name="is_published"
+        #is_published="ngModel"
+      />
+    </div>
+
+    <button class="btn btn-success">Submit</button>
+
+    <p>{{ message }}</p>
+  </form>
 </div>

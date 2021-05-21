@@ -91,7 +91,7 @@ export const getAllItemsWithPagination = (
   offset: number,
 ) => {
   const query =
-    'SELECT * FROM items WHERE name LIKE $1 ORDER BY id LIMIT $2 OFFSET $3';
+    'SELECT * FROM items WHERE name LIKE $1 ORDER BY id DESC LIMIT $2 OFFSET $3';
   const values = [nameCondition, limit, offset];
   return returnMany(ctx, query, values);
 };
