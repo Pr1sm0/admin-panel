@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from 'src/app/models/item.model';
 import { ItemService } from 'src/app/_services/item.service';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
 
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.sass']
+  styleUrls: ['./item-list.component.sass'],
 })
 export class ItemListComponent implements OnInit {
+  isAdmin = false;
+  isLoggedIn = false;
+  role = '';
   items: Item[] = [];
   currentItem?: Item;
   currentIndex = -1;
@@ -18,10 +22,21 @@ export class ItemListComponent implements OnInit {
   pageSize = 6;
   pageSizes = [6, 9, 12];
 
-  constructor(private itemService: ItemService) { }
+  constructor(
+    private itemService: ItemService,
+    private tokenStorageService: TokenStorageService
+  ) {}
 
   ngOnInit(): void {
     this.retrieveItems();
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.role = user.role;
+      this.isAdmin = this.role.includes('admin');
+    }
   }
 
   getRequestParams(searchName: string, page: number, pageSize: number): any {
@@ -45,17 +60,17 @@ export class ItemListComponent implements OnInit {
   retrieveItems(): void {
     const params = this.getRequestParams(this.name, this.page, this.pageSize);
 
-    this.itemService.getAll(params)
-    .subscribe(
-      response => {
+    this.itemService.getAll(params).subscribe(
+      (response) => {
         const { items, totalItems } = response;
         this.items = items;
         this.count = totalItems;
         console.log(response);
       },
-      error => {
+      (error) => {
         console.log(error);
-      });
+      }
+    );
   }
 
   handlePageChange(event: number): void {
@@ -81,15 +96,14 @@ export class ItemListComponent implements OnInit {
   }
 
   searchName(): void {
-    this.itemService.findByName(this.name)
-      .subscribe(
-        data => {
-          this.items = data;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
+    this.itemService.findByName(this.name).subscribe(
+      (data) => {
+        this.items = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
 }
