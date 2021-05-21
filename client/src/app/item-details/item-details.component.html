@@ -17,9 +17,21 @@
         name="name"
         required
         #name="ngModel"
+        minlength="3"
+        maxlength="100"
       />
-      <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
-        Name is required.
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="name.errors && f.submitted"
+      >
+        <div *ngIf="name.errors.required">Name is required!</div>
+        <div *ngIf="name.errors.minlength">
+          Name must have at least 3 characters
+        </div>
+        <div *ngIf="name.errors.maxlength">
+          Name must have at most 100 characters
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -35,7 +47,11 @@
         required
         #price="ngModel"
       />
-      <div class="alert alert-danger" role="alert" *ngIf="price.errors && f.submitted">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="price.errors && f.submitted"
+      >
         <div *ngIf="price.errors.required">Price is required!</div>
         <div *ngIf="price.errors.min">Price must be a positive number!</div>
       </div>
@@ -50,9 +66,21 @@
         required
         #description="ngModel"
         rows="6"
+        minlength="3"
+        maxlength="1000"
       ></textarea>
-      <div class="alert alert-danger" role="alert" *ngIf="description.errors && f.submitted">
-        Description is required.
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="description.errors && f.submitted"
+      >
+        <div *ngIf="description.errors.required">Description is required!</div>
+        <div *ngIf="description.errors.minlength">
+          Description must have at least 3 characters
+        </div>
+        <div *ngIf="description.errors.maxlength">
+          Description must have at most 1000 characters
+        </div>
       </div>
     </div>
 
@@ -68,18 +96,10 @@
       />
     </div>
 
-    <button
-      type="submit"
-      class="badge badge-success mb-2"
-    >
-      Update
-    </button>
-    
+    <button type="submit" class="badge badge-success mb-2">Update</button>
   </form>
 
-  <button class="badge badge-danger mr-2" (click)="deleteItem()">
-    Delete
-  </button>
+  <button class="badge badge-danger mr-2" (click)="deleteItem()">Delete</button>
 
   <p>{{ message }}</p>
 

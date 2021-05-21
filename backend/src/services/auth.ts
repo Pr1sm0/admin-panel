@@ -8,63 +8,38 @@ import {
   getUserByEmail,
   updateUserToken,
 } from '../db/queries/user';
-import { logger } from '../app';
 
 dotenv.config();
 
 const TWENTY_FOUR_HOURS_IN_SECONDS = 86400;
 const SALT = 10;
-const ERROR_LEVEL = 'error';
 const WRONG_PASSWORD_ERROR_MESSAGE = 'Incorrect password.';
 
 const secret = process.env.JWT_SECRET;
 
 const hashPassword = async (password: string) => {
-  return new Promise((resolve, reject) =>
-    bcrypt.hash(password, SALT, (err, hash) => {
-      if (err) {
-        logger.log(ERROR_LEVEL, err);
-        reject(err);
-      } else {
-        resolve(hash);
-      }
-    }),
-  );
-}
-
-const createToken = (userId: number, role: string) => {
-  return new Promise((resolve, reject) => {
-    jwt.sign(
-      { id: userId, role: role },
-      secret,
-      {
-        expiresIn: TWENTY_FOUR_HOURS_IN_SECONDS,
-      },
-      (err, data) => {
-        if (err) {
-          logger.log(ERROR_LEVEL, err);
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      },
-    );
-  });
+  const hash = await bcrypt.hash(password, SALT);
+  return hash;
 };
 
-const checkPassword = (password: string, userPassword: string) => {
-  return new Promise((resolve, reject) =>
-    bcrypt.compare(password, userPassword, (err, response) => {
-      if (err) {
-        logger.log(ERROR_LEVEL, err);
-        reject(err);
-      } else if (response) {
-        resolve(response);
-      } else {
-        reject(new Error(WRONG_PASSWORD_ERROR_MESSAGE));
-      }
-    }),
-  );
+const createToken = (userId: number, role: string) => {
+  const token = jwt.sign({ id: userId, role: role }, secret, {
+    expiresIn: TWENTY_FOUR_HOURS_IN_SECONDS,
+  });
+  return token;
+};
+
+const checkPassword = async (
+  ctx: Koa.Context,
+  password: string,
+  userPassword: string,
+) => {
+  const res = await bcrypt.compare(password, userPassword);
+  if (res) {
+    return res;
+  } else {
+    ctx.throw(401, WRONG_PASSWORD_ERROR_MESSAGE);
+  }
 };
 
 export const signup = async (ctx: Koa.Context, user: User) => {
@@ -81,17 +56,20 @@ export const signup = async (ctx: Koa.Context, user: User) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        token: user.token
-      }
+        token: user.token,
+      };
     });
-}
+};
 
-export const signin = async (ctx: Koa.Context, email: string, password: string) => {
+export const signin = async (
+  ctx: Koa.Context,
+  credentials: any
+) => {
   let user: User;
-  return getUserByEmail(ctx, email)
+  return getUserByEmail(ctx, credentials.email)
     .then((foundUser) => {
       user = foundUser;
-      return checkPassword(password, foundUser.password);
+      return checkPassword(ctx, credentials.password, foundUser.password);
     })
     .then(() => createToken(user.id, user.role))
     .then((token: string) => updateUserToken(ctx, token, user.id))
@@ -101,8 +79,7 @@ export const signin = async (ctx: Koa.Context, email: string, password: string) 
         name: user.name,
         email: user.email,
         role: user.role,
-        token: user.token
-      }
-    })
-    .catch((err) => ctx.throw(401, err.message));
-}
+        token: user.token,
+      };
+    });
+};

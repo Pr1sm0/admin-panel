@@ -1,4 +1,5 @@
 import * as Koa from 'koa';
+import * as Joi from 'joi';
 import {
   createItem,
   deleteItem,
@@ -7,6 +8,17 @@ import {
   getItem,
 } from '../db/queries/item';
 import { getPaginationData } from '../services/pagination';
+import { Item } from '../interfaces';
+
+const itemSchema = Joi.object({
+  name: Joi.string().min(3).max(100).required(),
+
+  price: Joi.number().min(0).required(),
+
+  description: Joi.string().min(3).max(1000).required(),
+
+  is_published: Joi.boolean().required(),
+});
 
 const getAllItemsController = async (ctx: Koa.Context) => {
   ctx.response.body = await getAllItems(ctx);
@@ -18,40 +30,57 @@ const getItemByIdController = async (ctx: Koa.Context) => {
 };
 
 const createItemController = async (ctx: Koa.Context) => {
-  const item = ctx.request.body;
-  if (!item) {
-    ctx.response.body = {
-      message: 'Content can not be empty!',
+  try {
+    const item: Item = {
+      name: ctx.request.body.name,
+      price: ctx.request.body.price,
+      description: ctx.request.body.description,
+      is_published: ctx.request.body.is_published,
     };
-    return;
-  }
 
-  const res = await createItem(ctx, item);
-  if (res) {
-    ctx.response.body = {
-      res,
-      message: 'Item was created successfully.',
-    };
-  } else {
-    ctx.response.body = {
-      message: 'Cannot create Item.',
-    };
+    const validatedItem = await itemSchema.validateAsync(item);
+
+    const res = await createItem(ctx, validatedItem);
+    if (res) {
+      ctx.response.body = {
+        res,
+        message: 'Item was created successfully.',
+      };
+    } else {
+      ctx.response.body = {
+        message: 'Cannot create Item.',
+      };
+    }
+  } catch (err) {
+    ctx.throw(err.status, err);
   }
 };
 
 const editItemController = async (ctx: Koa.Context) => {
-  const id = Number(ctx.params.itemId);
-  const item = ctx.request.body;
-  const res = await editItem(ctx, id, item);
-  if (res) {
-    ctx.response.body = {
-      res,
-      message: 'Item was updated successfully.',
+  try {
+    const id = Number(ctx.params.itemId);
+    const item: Item = {
+      name: ctx.request.body.name,
+      price: ctx.request.body.price,
+      description: ctx.request.body.description,
+      is_published: ctx.request.body.is_published,
     };
-  } else {
-    ctx.response.body = {
-      message: 'Cannot update Item.',
-    };
+
+    const validatedItem = await itemSchema.validateAsync(item);
+
+    const res = await editItem(ctx, id, validatedItem);
+    if (res) {
+      ctx.response.body = {
+        res,
+        message: 'Item was updated successfully.',
+      };
+    } else {
+      ctx.response.body = {
+        message: 'Cannot update Item.',
+      };
+    }
+  } catch (err) {
+    ctx.throw(err.status, err);
   }
 };
 
