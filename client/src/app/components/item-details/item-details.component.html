@@ -1,87 +1,72 @@
 <div>
-  <div *ngIf="currentItem.id" class="edit-form">
-    <h4>Item</h4>
-    <form>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          [(ngModel)]="currentItem.name"
-          name="name"
-          required
-          #name="ngModel"
-        />
-        <div 
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="name.errors"
-        >
-          Name is required.
-        </div>
+  <h4>Item</h4>
+  <form
+    *ngIf="currentItem.id"
+    name="form"
+    (ngSubmit)="f.form.valid && updateItem()"
+    #f="ngForm"
+    novalidate
+  >
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        [(ngModel)]="currentItem.name"
+        name="name"
+        required
+        #name="ngModel"
+      />
+      <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+        Name is required.
       </div>
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input
-          type="number"
-          class="form-control"
-          id="price"
-          [(ngModel)]="currentItem.price"
-          name="price"
-          min="0.00"
-          step="0.01"
-          required
-          #price="ngModel"
-        />
-        <div 
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="price.errors"
-        >
-          Price is required.
-        </div>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="price"
+        [(ngModel)]="currentItem.price"
+        name="price"
+        min="0.00"
+        step="0.01"
+        required
+        #price="ngModel"
+      />
+      <div class="alert alert-danger" role="alert" *ngIf="price.errors && f.submitted">
+        <div *ngIf="price.errors.required">Price is required!</div>
+        <div *ngIf="price.errors.min">Price must be a positive number!</div>
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input
-          type="text"
-          class="form-control"
-          id="description"
-          [(ngModel)]="currentItem.description"
-          name="description"
-          required
-          #description="ngModel"
-        />
-        <div 
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="description.errors"
-        >
-          Description is required.
-        </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        [(ngModel)]="currentItem.description"
+        name="description"
+        required
+        #description="ngModel"
+        rows="6"
+      ></textarea>
+      <div class="alert alert-danger" role="alert" *ngIf="description.errors && f.submitted">
+        Description is required.
       </div>
+    </div>
 
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentItem.is_published ? "Published" : "Unpublished" }}
-      </div>
-    </form>
-
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentItem.is_published"
-      (click)="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentItem.is_published"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-    >
-      Publish
-    </button>
+    <div class="form-group">
+      <label for="is_published">Publish</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="is_published"
+        [(ngModel)]="currentItem.is_published"
+        name="is_published"
+        #is_published="ngModel"
+      />
+    </div>
 
     <button class="badge badge-danger mr-2" (click)="deleteItem()">
       Delete
@@ -90,12 +75,11 @@
     <button
       type="submit"
       class="badge badge-success mb-2"
-      (click)="updateItem()"
     >
       Update
     </button>
     <p>{{ message }}</p>
-  </div>
+  </form>
 
   <div *ngIf="!currentItem.id">
     <br />

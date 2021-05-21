@@ -31,6 +31,11 @@
   <div class="col-md-6">
     <h4>Item List</h4>
 
+    <div *ngIf="!items[0]">
+      <br />
+      <p>No items found.</p>
+    </div>
+    
     <ul class="list-group">
       <li
         class="list-group-item"

@@ -6,21 +6,22 @@ import { Item } from 'src/app/models/item.model';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.sass']
+  styleUrls: ['./item-details.component.sass'],
 })
 export class ItemDetailsComponent implements OnInit {
   currentItem: Item = {
     name: '',
     price: 0,
     description: '',
-    is_published: false
+    is_published: false,
   };
   message = '';
 
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.message = '';
@@ -28,58 +29,40 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   getItem(id: string): void {
-    this.itemService.get(id)
-      .subscribe(
-        data => {
-          this.currentItem = data;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  updatePublished(status: boolean): void {
-    const data = {
-      name: this.currentItem.name,
-      price: this.currentItem.price,
-      description: this.currentItem.description,
-      is_published: status
-    };
-
-    this.itemService.update(this.currentItem.id, data)
-      .subscribe(
-        response => {
-          this.currentItem.is_published = status;
-          console.log(response);
-          this.message = response.message;
-        },
-        error => {
-          console.log(error);
-        });
+    this.itemService.get(id).subscribe(
+      (data) => {
+        this.currentItem = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   updateItem(): void {
-    this.itemService.update(this.currentItem.id, this.currentItem)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.message = response.message;
-        },
-        error => {
-          console.log(error);
-        });
+    this.itemService.update(this.currentItem.id, this.currentItem).subscribe(
+      (response) => {
+        console.log(response);
+        this.message = response.message;
+      },
+      (error) => {
+        console.log(error);
+        this.message = error.error;
+      }
+    );
   }
 
   deleteItem(): void {
-    this.itemService.delete(this.currentItem.id)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.router.navigate(['/items']);
-        },
-        error => {
-          console.log(error);
-        });
+    this.itemService.delete(this.currentItem.id).subscribe(
+      (response) => {
+        console.log(response);
+        this.router.navigate(['/items']);
+      },
+      (error) => {
+        console.log(error);
+        this.message = error.error;
+      }
+    );
   }
 }
