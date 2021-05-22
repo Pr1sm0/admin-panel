@@ -20,6 +20,6 @@ export interface User {
 export interface Image {
   id?: number;
   size: string;
-  itemId: number;
-  imageUrl: string;
+  item_id: number;
+  image_url: string;
 }

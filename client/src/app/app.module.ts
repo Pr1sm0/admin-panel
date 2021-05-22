@@ -14,6 +14,8 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { ItemListComponent } from './item-list/item-list.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { ItemCardComponent } from './item-card/item-card.component';
+import { ItemPageComponent } from './item-page/item-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     ProfileComponent,
     AddItemComponent,
     ItemDetailsComponent,
-    ItemListComponent
+    ItemListComponent,
+    ItemCardComponent,
+    ItemPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,16 +9,16 @@ export const getAllImagesByItemId = (ctx: Koa.Context, itemId: number) => {
 };
 
 export const getImageByItemId = (ctx: Koa.Context, itemId: number) => {
-  const query = "SELECT * FROM images WHERE item_id=$1 AND size='small'";
+  const query = "SELECT image_url FROM images WHERE item_id=$1 AND size='large' ORDER BY id LIMIT 1";
   const values = [itemId];
   return returnSingle(ctx, query, values);
 };
 
 export const addImage = (ctx: Koa.Context, image: Image) => {
-  const { size, itemId, imageUrl } = image;
+  const { size, item_id, image_url } = image;
   const query =
     'INSERT INTO images (size, item_id, image_url) VALUES ($1, $2, $3) RETURNING *';
-  const values = [size, itemId, imageUrl];
+  const values = [size, item_id, image_url];
   return returnSingle(ctx, query, values);
 };
 

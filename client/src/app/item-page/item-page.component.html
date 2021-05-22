@@ -1,0 +1,45 @@
+<img *ngIf="images[0]" [src]="images[0].image_url" />
+<img *ngIf="!images[0]" [src]="default_image" />
+<div class="col-md-6">
+  <div *ngIf="currentItem">
+    <h4>Item</h4>
+    <div>
+      <label><strong>Name:</strong></label> {{ currentItem.name }}
+    </div>
+    <div>
+      <label><strong>Price:</strong></label>
+      {{ currentItem.price | currency }}
+    </div>
+    <div>
+      <label><strong>Description:</strong></label>
+      {{ currentItem.description }}
+    </div>
+    <div>
+      <label><strong>Created At:</strong></label>
+      {{ currentItem.created_at | date: "medium" }}
+    </div>
+    <div>
+      <label><strong>Updated At:</strong></label>
+      {{ currentItem.updated_at | date: "medium" }}
+    </div>
+    <div>
+      <label><strong>Status:</strong></label>
+      {{ currentItem.is_published ? "Published" : "Unpublished" }}
+    </div>
+
+    <a
+      class="badge badge-warning"
+      routerLink="/items/{{ currentItem.id }}/edit"
+      *ngIf="isAdmin"
+    >
+      Edit
+    </a>
+    <a
+      class="badge badge-warning"
+      routerLink="/{{ currentItem.id }}/add-image"
+      *ngIf="isAdmin"
+    >
+      Add image
+    </a>
+  </div>
+</div>
