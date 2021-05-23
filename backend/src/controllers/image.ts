@@ -2,11 +2,24 @@ import * as Koa from 'koa';
 import {
   addImage, getAllImagesByItemId, getImageByItemId,
 } from '../db/queries/image';
+import { Image } from '../interfaces';
 
 const addImageController = async (ctx: Koa.Context) => {
-  const image = ctx.request.body;
-  image.image_url = `http://localhost:8080/images/${ctx.request.file.filename}`;
-  const res = await addImage(ctx, image);
+  const originalImage: Image = ctx.request.body;
+  originalImage.size = 'original';
+  originalImage.image_url = `http://localhost:8080/images/original/${ctx.request.file.filename}`;
+  const res = await addImage(ctx, originalImage);
+
+  const largeImage: Image = ctx.request.body;
+  largeImage.size = 'large';
+  largeImage.image_url = `http://localhost:8080/images/large/${ctx.request.body.images.largeImageName}`;
+  await addImage(ctx, largeImage);
+
+  const smallImage: Image = ctx.request.body;
+  smallImage.size = 'small';
+  smallImage.image_url = `http://localhost:8080/images/small/${ctx.request.body.images.smallImageName}`;
+  await addImage(ctx, smallImage);
+
   if (res) {
     ctx.response.body = {
       res,

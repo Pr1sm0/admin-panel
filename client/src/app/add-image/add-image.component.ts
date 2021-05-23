@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddImageComponent implements OnInit {
   image = {
-    size: 'large',
+    size: 'original',
     item_id: this.route.snapshot.params.itemId,
     image_url: '',
   };
