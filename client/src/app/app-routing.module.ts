@@ -5,7 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ItemListComponent } from './item-list/item-list.component';
-import { ItemDetailsComponent } from './item-details/item-details.component';
+import { ItemEditComponent } from './item-edit/item-edit.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { AddImageComponent } from './add-image/add-image.component';
 import { ItemPageComponent } from './item-page/item-page.component';
@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'items', component: ItemListComponent },
   { path: 'items/:id', component: ItemPageComponent },
-  { path: 'items/:id/edit', component: ItemDetailsComponent },
+  { path: 'items/:id/edit', component: ItemEditComponent },
   { path: 'add', component: AddItemComponent },
   { path: ':itemId/add-image', component: AddImageComponent },
   { path: '', redirectTo: 'items', pathMatch: 'full' }

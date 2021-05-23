@@ -52,12 +52,19 @@ export const resizeImage = async (ctx: Koa.Context, next: any) => {
   const smallImageName = `small-${currentDay}-${currentMonth}-${currentYear}-${currentHours}-${currentMinutes}-${currentSeconds}-${imageName}`;
 
   await sharp(ctx.request.file.path)
-    .resize(640, 320)
-    .jpeg({ quality: 90 })
+    .resize({
+      width: 640, 
+      height: 320,
+      fit: 'inside'
+    })
     .toFile(path.resolve(ctx.request.file.destination, '../large', largeImageName));
   
   await sharp(ctx.request.file.path)
-    .resize(320, 320)
+    .resize({
+      width: 320, 
+      height: 320,
+      fit: 'inside'
+    })
     .jpeg({ quality: 90 })
     .toFile(path.resolve(ctx.request.file.destination, '../small', smallImageName));
     const imageNames = {

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from 'src/app/models/item.model';
-import { ItemService } from 'src/app/_services/item.service';
+import { ItemService } from 'src/app/services/item.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
-  styleUrls: ['./add-item.component.sass']
+  styleUrls: ['./add-item.component.scss']
 })
 export class AddItemComponent implements OnInit {
   item: Item = {
@@ -44,16 +44,5 @@ export class AddItemComponent implements OnInit {
           console.log(error);
           this.message = error.error;
         });
-  }
-
-  newItem(): void {
-    this.submitted = false;
-    this.message = '';
-    this.item = {
-      name: '',
-      price: 0,
-      description: '',
-      is_published: false
-    };
   }
 }

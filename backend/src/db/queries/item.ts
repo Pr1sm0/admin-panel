@@ -41,42 +41,6 @@ export const deleteItem = (ctx: Koa.Context, id: number) => {
   return returnSingle(ctx, query, values);
 };
 
-export const sortItemsByNameAsc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY name';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByNameDesc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY name DESC';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByPriceAsc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY price';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByPriceDesc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY price DESC';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByDateAsc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY created_at';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByDateDesc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY created_at DESC';
-  return returnMany(ctx, query);
-};
-
-export const findItemsByName = (ctx: Koa.Context, name: string) => {
-  const query = "SELECT * FROM items WHERE name LIKE '%$1%'";
-  const values = [name];
-  return returnMany(ctx, query, values);
-};
-
 export const countAllItemsWithPagination = async (ctx: Koa.Context, condition: string) => {
   const query = 'SELECT count(*) FROM items WHERE name LIKE $1';
   const values = [condition];

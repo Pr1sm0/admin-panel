@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from 'src/app/models/item.model';
-import { ItemService } from 'src/app/_services/item.service';
-import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { ItemService } from 'src/app/services/item.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.sass'],
+  styleUrls: ['./item-list.component.scss'],
 })
 export class ItemListComponent implements OnInit {
   isAdmin = false;

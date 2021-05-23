@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from '../_services/token-storage.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.sass']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   currentUser: any;

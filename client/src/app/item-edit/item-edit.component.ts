@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from 'src/app/_services/item.service';
+import { ItemService } from 'src/app/services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/models/item.model';
 
 @Component({
-  selector: 'app-item-details',
-  templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.sass'],
+  selector: 'app-item-edit',
+  templateUrl: './item-edit.component.html',
+  styleUrls: ['./item-edit.component.scss'],
 })
-export class ItemDetailsComponent implements OnInit {
+export class ItemEditComponent implements OnInit {
   currentItem: Item = {
     name: '',
     price: 0,

@@ -1,4 +1,3 @@
-<img *ngIf="images[0]" [src]="images[0].image_url" />
 <img *ngIf="!images[0]" [src]="default_image" />
 <div class="col-md-6">
   <div *ngIf="currentItem">
@@ -43,3 +42,11 @@
     </a>
   </div>
 </div>
+
+<ngb-carousel *ngIf="images[0]">
+  <ng-template ngbSlide *ngFor="let image of images">
+    <div class="picsum-img-wrapper">
+      <img [src]="image.image_url" alt="Product Image" />
+    </div>
+  </ng-template>
+</ngb-carousel>

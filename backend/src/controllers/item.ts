@@ -9,6 +9,7 @@ import {
 } from '../db/queries/item';
 import { getPaginationData } from '../services/pagination';
 import { Item } from '../interfaces';
+import { deleteAllImagesByItemId } from '../db/queries/image';
 
 const itemSchema = Joi.object({
   name: Joi.string().min(3).max(100).required(),
@@ -86,6 +87,7 @@ const editItemController = async (ctx: Koa.Context) => {
 
 const deleteItemController = async (ctx: Koa.Context) => {
   const id = Number(ctx.params.itemId);
+  await deleteAllImagesByItemId(ctx, id);
   const res = await deleteItem(ctx, id);
   if (res) {
     ctx.response.body = {
