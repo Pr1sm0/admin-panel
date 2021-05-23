@@ -16,6 +16,8 @@
         [(ngModel)]="item.name"
         name="name"
         #name="ngModel"
+        minlength="3"
+        maxlength="100"
       />
     </div>
 
@@ -24,7 +26,13 @@
       role="alert"
       *ngIf="name.errors && f.submitted"
     >
-      Name is required!
+      <div *ngIf="name.errors.required">Name is required!</div>
+      <div *ngIf="name.errors.minlength">
+        Name must have at least 3 characters
+      </div>
+      <div *ngIf="name.errors.maxlength">
+        Name must have at most 100 characters
+      </div>
     </div>
 
     <div class="form-group">
@@ -61,6 +69,8 @@
         name="description"
         rows="6"
         #description="ngModel"
+        minlength="3"
+        maxlength="1000"
       ></textarea>
     </div>
 
@@ -69,7 +79,13 @@
       role="alert"
       *ngIf="description.errors && f.submitted"
     >
-      Description is required!
+      <div *ngIf="description.errors.required">Description is required!</div>
+      <div *ngIf="description.errors.minlength">
+        Description must have at least 3 characters
+      </div>
+      <div *ngIf="description.errors.maxlength">
+        Description must have at most 1000 characters
+      </div>
     </div>
 
     <div class="form-group">

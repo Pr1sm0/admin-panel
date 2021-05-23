@@ -32,10 +32,6 @@ export class ItemService {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 
-  deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl);
-  }
-
   findByName(name: any): Observable<Item[]> {
     return this.http.get<Item[]>(`${baseUrl}?name=${name}`);
   }

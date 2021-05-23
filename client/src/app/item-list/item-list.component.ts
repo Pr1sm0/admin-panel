@@ -14,17 +14,15 @@ export class ItemListComponent implements OnInit {
   role = '';
   items: Item[] = [];
   currentItem?: Item;
-  currentIndex = -1;
   name = '';
 
   page = 1;
   count = 0;
   pageSize = 6;
-  pageSizes = [6, 9, 12];
 
   constructor(
     private itemService: ItemService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -76,34 +74,5 @@ export class ItemListComponent implements OnInit {
   handlePageChange(event: number): void {
     this.page = event;
     this.retrieveItems();
-  }
-
-  handlePageSizeChange(event: any): void {
-    this.pageSize = event.target.value;
-    this.page = 1;
-    this.retrieveItems();
-  }
-
-  refreshList(): void {
-    this.retrieveItems();
-    this.currentItem = undefined;
-    this.currentIndex = -1;
-  }
-
-  setActiveItem(item: Item, index: number): void {
-    this.currentItem = item;
-    this.currentIndex = index;
-  }
-
-  searchName(): void {
-    this.itemService.findByName(this.name).subscribe(
-      (data) => {
-        this.items = data;
-        console.log(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 }

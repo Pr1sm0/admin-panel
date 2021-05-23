@@ -25,6 +25,7 @@
       nextLabel="Next"
       [responsive]="true"
       (pageChange)="handlePageChange($event)"
+      *ngIf="items[0]"
     ></pagination-controls>
   </div>
 
@@ -35,72 +36,21 @@
       <br />
       <p>No items found.</p>
     </div>
-    
     <ul class="list-group">
-      <li
+      <app-item-card
         class="list-group-item"
         *ngFor="
-          let item of items | paginate : {
+          let item of items
+            | paginate
+              : {
                   itemsPerPage: pageSize,
                   currentPage: page,
                   totalItems: count
                 };
           let i = index
         "
-        [class.active]="i == currentIndex"
-        (click)="setActiveItem(item, i)"
-      >
-        {{ item.name }}
-      </li>
+        [item]="item"
+      ></app-item-card>
     </ul>
-  </div>
-  <div class="col-md-6">
-    <div *ngIf="currentItem">
-      <h4>Item</h4>
-      <div>
-        <label><strong>Name:</strong></label> {{ currentItem.name }}
-      </div>
-      <div>
-        <label><strong>Price:</strong></label> {{ currentItem.price | currency }}
-      </div>
-      <div>
-        <label><strong>Description:</strong></label>
-        {{ currentItem.description }}
-      </div>
-      <div>
-        <label><strong>Created At:</strong></label>
-        {{ currentItem.created_at | date:'medium' }}
-      </div>
-      <div>
-        <label><strong>Updated At:</strong></label>
-        {{ currentItem.updated_at | date:'medium' }}
-      </div>
-      <div>
-        <label><strong>Status:</strong></label>
-        {{ currentItem.is_published ? "Published" : "Unpublished" }}
-      </div>
-
-      <a
-        class="badge badge-warning"
-        routerLink="/items/{{ currentItem.id }}"
-        *ngIf="isAdmin"
-      >
-        Edit
-      </a>
-    </div>
-
-    <div *ngIf="!currentItem">
-      <br />
-      <p>Please click on a Item...</p>
-    </div>
-  </div>
-
-  <div class="mt-3">
-    Items per Page:
-    <select (change)="handlePageSizeChange($event)">
-      <option *ngFor="let size of pageSizes" [ngValue]="size">
-        {{ size }}
-      </option>
-    </select>
   </div>
 </div>

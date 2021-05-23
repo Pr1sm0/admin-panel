@@ -4,6 +4,7 @@ import * as bodyParser from 'koa-bodyparser';
 import * as winston from 'winston';
 import * as cors from '@koa/cors';
 import router from './routes/index';
+import * as serve from 'koa-static';
 
 const app: Koa = new Koa();
 
@@ -33,10 +34,7 @@ app.use(async (ctx: Koa.Context, next: () => Promise<any>) => {
   }
 });
 
-// Initial route
-app.use(async (ctx: Koa.Context) => {
-  ctx.body = 'Initial route';
-});
+app.use(serve(`${__dirname}/../public`));
 
 // Application error logging.
 app.on(ERROR_EVENT, console.error);

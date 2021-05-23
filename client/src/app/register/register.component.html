@@ -13,7 +13,7 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Name</label>
+        <label for="name">Name</label>
         <input
           type="text"
           class="form-control"
@@ -21,7 +21,7 @@
           [(ngModel)]="form.name"
           required
           minlength="3"
-          maxlength="50"
+          maxlength="100"
           #name="ngModel"
         />
         <div class="alert-danger" *ngIf="name.errors && f.submitted">
@@ -30,7 +30,7 @@
             Name must be at least 3 characters
           </div>
           <div *ngIf="name.errors.maxlength">
-            Name must be at most 50 characters
+            Name must be at most 100 characters
           </div>
         </div>
       </div>
@@ -63,12 +63,20 @@
           [(ngModel)]="form.password"
           required
           minlength="6"
+          maxlength="50"
           #password="ngModel"
+          pattern="^[a-zA-Z0-9]{6,50}$"
         />
         <div class="alert-danger" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors.required">Password is required</div>
           <div *ngIf="password.errors.minlength">
             Password must be at least 6 characters
+          </div>
+          <div *ngIf="password.errors.maxlength">
+            Password must be at most 50 characters
+          </div>
+          <div *ngIf="password.errors.pattern">
+            Password can only contain upper and lowercase letters and numbers
           </div>
         </div>
       </div>
