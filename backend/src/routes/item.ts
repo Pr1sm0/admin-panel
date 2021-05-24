@@ -10,7 +10,7 @@ const routerOpts: Router.IRouterOptions = {
 const router = new Router<DefaultState, Context>(routerOpts);
 
 router.get('/', itemControllers.getAllItemsPaginationController);
-router.get('/all', itemControllers.getAllItemsController);
+router.get('/published', itemControllers.getAllItemsPaginationPublishedController);
 router.get('/:itemId', itemControllers.getItemByIdController);
 
 router.post(

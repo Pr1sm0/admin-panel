@@ -15,6 +15,10 @@ export class ItemService {
     return this.http.get<any>(baseUrl, { params });
   }
 
+  getAllPublished(params: any): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/published`, { params });
+  }
+
   get(id: any): Observable<any> {
     return this.http.get(`${baseUrl}/${id}`);
   }

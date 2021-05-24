@@ -1,0 +1,36 @@
+.btn_3 {
+  display: inline-block;
+  padding: 18px 36px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #2577fd;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2577fd;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+  margin-right: 20px;
+}
+
+.btn_3:hover {
+  background-color: #2577fd;
+  color: #fff;
+}
+
+p {
+  margin-top: 60px;
+}
+
+h4 {
+  margin-bottom: 40px;
+}
+
+.img-container img 
+{
+ max-width: 640px;
+ max-height: 640px;
+}

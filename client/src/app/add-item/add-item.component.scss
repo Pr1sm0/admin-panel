@@ -1,0 +1,82 @@
+.add_part_form {
+  height: 600px;
+  display: table;
+}
+
+.add_part_form .add_part_form_iner {
+  display: table-cell;
+  vertical-align: middle;
+  h4 {
+    margin-bottom: 40px;
+  }
+}
+
+.btn_3 {
+  display: inline-block;
+  padding: 18px 36px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #2577fd;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2577fd;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+}
+
+.btn_3:hover {
+  background-color: #2577fd;
+  color: #fff;
+}
+
+.add_part_form h3 {
+  font-size: 26px;
+  line-height: 36px;
+  font-weight: 700;
+  margin-bottom: 80px;
+}
+
+.form-group .btn_3 {
+  display: block;
+  width: 100%;
+  margin: 30px 0 17px;
+}
+
+.p_star {
+  display: inline-block;
+  position: relative;
+}
+
+.add_part_form .form-control {
+  border: 0 solid transparent;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+}
+
+.p_star input {
+  background: #fff;
+}
+
+.p_star label {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.add_part_form .form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #2577fd;
+  outline: 0;
+  box-shadow: none;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+}
+
+.alert.alert-danger {
+  margin-top: 10px;
+}

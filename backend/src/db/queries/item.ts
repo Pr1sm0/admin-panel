@@ -2,11 +2,6 @@ import { Item } from '../../interfaces';
 import { returnMany, returnSingle } from './templates';
 import * as Koa from 'koa';
 
-export const getAllItems = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items';
-  return returnMany(ctx, query);
-};
-
 export const getItem = (ctx: Koa.Context, id: number) => {
   const query = 'SELECT * FROM items WHERE id=$1';
   const values = [id];
@@ -56,6 +51,25 @@ export const getAllItemsWithPagination = (
 ) => {
   const query =
     'SELECT * FROM items WHERE name LIKE $1 ORDER BY id DESC LIMIT $2 OFFSET $3';
+  const values = [nameCondition, limit, offset];
+  return returnMany(ctx, query, values);
+};
+
+export const countAllItemsWithPaginationPublished = async (ctx: Koa.Context, condition: string) => {
+  const query = "SELECT count(*) FROM items WHERE name LIKE $1 AND is_published='true'";
+  const values = [condition];
+  const count = await returnSingle(ctx, query, values);
+  return count.count;
+};
+
+export const getAllItemsWithPaginationPublished = (
+  ctx: Koa.Context,
+  nameCondition: string,
+  limit: number,
+  offset: number,
+) => {
+  const query =
+    "SELECT * FROM items WHERE name LIKE $1 AND is_published='true' ORDER BY id DESC LIMIT $2 OFFSET $3";
   const values = [nameCondition, limit, offset];
   return returnMany(ctx, query, values);
 };

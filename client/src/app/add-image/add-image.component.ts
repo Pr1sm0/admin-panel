@@ -15,6 +15,7 @@ export class AddImageComponent implements OnInit {
   };
   selectedFile: any;
   message = '';
+  imageSrc: any;
 
   constructor(
     private imageService: ImageService,
@@ -28,6 +29,12 @@ export class AddImageComponent implements OnInit {
 
   onFileChanged(event: any) {
     this.selectedFile = event.target.files[0];
+    this.message = '';
+    if (this.selectedFile) {
+      const reader = new FileReader();
+        reader.onload = e => this.imageSrc = reader.result;
+        reader.readAsDataURL(this.selectedFile);
+    }
   }
 
   saveImage(): void {
@@ -37,21 +44,19 @@ export class AddImageComponent implements OnInit {
       uploadData.append('size', this.image.size);
       uploadData.append('item_id', String(this.image.item_id));
       uploadData.append('image_url', this.image.image_url);
-      console.log(uploadData);
 
       this.imageService.create(uploadData).subscribe(
         (response) => {
-          console.log(response);
           this.message = response.message;
           this.selectedFile = null;
+          this.imageSrc = '';
         },
         (error) => {
-          console.log(error);
           this.message = error.error;
         }
       );
     } else {
-      this.message = 'Please, select an image to download!';
+      this.message = 'Please, select an image to upload!';
     }
   }
 }

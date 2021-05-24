@@ -1,4 +1,4 @@
-import { countAllItemsWithPagination, getAllItemsWithPagination } from '../db/queries/item';
+import { countAllItemsWithPagination, countAllItemsWithPaginationPublished, getAllItemsWithPagination, getAllItemsWithPaginationPublished } from '../db/queries/item';
 import { Item } from '../interfaces';
 import * as Koa from 'koa';
 
@@ -24,6 +24,20 @@ export const getPaginationData = async (ctx: Koa.Context, query: any) => {
 
   const totalItems = await countAllItemsWithPagination(ctx, nameCondition);
   const items = await getAllItemsWithPagination(ctx, nameCondition, limit, offset);
+  
+  const response = getPagingData(totalItems, items, page, limit);
+
+  return response;
+};
+
+export const getPaginationDataPublished = async (ctx: Koa.Context, query: any) => {
+  const { page, size, name } = query;
+  const nameCondition = name ? `%${name}%` : '%%';
+
+  const { limit, offset } = getPagination(page, size);
+
+  const totalItems = await countAllItemsWithPaginationPublished(ctx, nameCondition);
+  const items = await getAllItemsWithPaginationPublished(ctx, nameCondition, limit, offset);
   
   const response = getPagingData(totalItems, items, page, limit);
 

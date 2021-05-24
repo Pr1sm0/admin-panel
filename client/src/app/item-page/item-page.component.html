@@ -13,15 +13,15 @@
       <label><strong>Description:</strong></label>
       {{ currentItem.description }}
     </div>
-    <div>
+    <div *ngIf="isAdmin">
       <label><strong>Created At:</strong></label>
       {{ currentItem.created_at | date: "medium" }}
     </div>
-    <div>
+    <div *ngIf="isAdmin">
       <label><strong>Updated At:</strong></label>
       {{ currentItem.updated_at | date: "medium" }}
     </div>
-    <div>
+    <div *ngIf="isAdmin">
       <label><strong>Status:</strong></label>
       {{ currentItem.is_published ? "Published" : "Unpublished" }}
     </div>
@@ -45,7 +45,7 @@
 
 <ngb-carousel *ngIf="images[0]">
   <ng-template ngbSlide *ngFor="let image of images">
-    <div class="picsum-img-wrapper">
+    <div class="picsum-img-wrapper d-flex justify-content-center">
       <img [src]="image.image_url" alt="Product Image" />
     </div>
   </ng-template>

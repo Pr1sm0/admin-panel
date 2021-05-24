@@ -55,7 +55,7 @@ export const resizeImage = async (ctx: Koa.Context, next: any) => {
     .resize({
       width: 640, 
       height: 320,
-      fit: 'inside'
+      fit: 'cover'
     })
     .toFile(path.resolve(ctx.request.file.destination, '../large', largeImageName));
   
@@ -63,7 +63,7 @@ export const resizeImage = async (ctx: Koa.Context, next: any) => {
     .resize({
       width: 320, 
       height: 320,
-      fit: 'inside'
+      fit: 'cover'
     })
     .jpeg({ quality: 90 })
     .toFile(path.resolve(ctx.request.file.destination, '../small', smallImageName));

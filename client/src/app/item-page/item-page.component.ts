@@ -54,11 +54,8 @@ export class ItemPageComponent implements OnInit {
     this.itemService.get(id).subscribe(
       (data) => {
         this.currentItem = data;
-        console.log(data);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => error
     );
   }
 
@@ -68,11 +65,8 @@ export class ItemPageComponent implements OnInit {
         if(data[0]){
           this.images = data;
         } 
-        console.log(data);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => error
     );
   }
 }

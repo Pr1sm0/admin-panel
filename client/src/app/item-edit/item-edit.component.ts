@@ -16,6 +16,8 @@ export class ItemEditComponent implements OnInit {
     is_published: false,
   };
   message = '';
+  isUpdateFailed = false;
+  isSuccessful = false;
 
   constructor(
     private itemService: ItemService,
@@ -32,22 +34,20 @@ export class ItemEditComponent implements OnInit {
     this.itemService.get(id).subscribe(
       (data) => {
         this.currentItem = data;
-        console.log(data);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => error
     );
   }
 
   updateItem(): void {
     this.itemService.update(this.currentItem.id, this.currentItem).subscribe(
       (response) => {
-        console.log(response);
+        this.isUpdateFailed = false;
+        this.isSuccessful = true;
         this.message = response.message;
       },
       (error) => {
-        console.log(error);
+        this.isUpdateFailed = true;
         this.message = error.error;
       }
     );
@@ -56,11 +56,9 @@ export class ItemEditComponent implements OnInit {
   deleteItem(): void {
     this.itemService.delete(this.currentItem.id).subscribe(
       (response) => {
-        console.log(response);
         this.router.navigate(['/items']);
       },
       (error) => {
-        console.log(error);
         this.message = error.error;
       }
     );

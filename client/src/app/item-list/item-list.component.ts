@@ -26,8 +26,6 @@ export class ItemListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.retrieveItems();
-
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
@@ -35,6 +33,7 @@ export class ItemListComponent implements OnInit {
       this.role = user.role;
       this.isAdmin = this.role.includes('admin');
     }
+    this.retrieveItems();
   }
 
   getRequestParams(searchName: string, page: number, pageSize: number): any {
@@ -58,17 +57,25 @@ export class ItemListComponent implements OnInit {
   retrieveItems(): void {
     const params = this.getRequestParams(this.name, this.page, this.pageSize);
 
-    this.itemService.getAll(params).subscribe(
-      (response) => {
-        const { items, totalItems } = response;
-        this.items = items;
-        this.count = totalItems;
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if(this.isAdmin){
+      this.itemService.getAll(params).subscribe(
+        (response) => {
+          const { items, totalItems } = response;
+          this.items = items;
+          this.count = totalItems;
+        },
+        (error) => error
+      );
+    } else {
+      this.itemService.getAllPublished(params).subscribe(
+        (response) => {
+          const { items, totalItems } = response;
+          this.items = items;
+          this.count = totalItems;
+        },
+        (error) => error
+      );
+    }
   }
 
   handlePageChange(event: number): void {
