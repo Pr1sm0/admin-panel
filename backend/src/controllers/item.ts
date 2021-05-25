@@ -4,24 +4,30 @@ import {
   createItem,
   deleteItem,
   editItem,
-  getAllItems,
   getItem,
 } from '../db/queries/item';
-import { getPaginationData } from '../services/pagination';
+import { getPaginationData, getPaginationDataPublished } from '../services/pagination';
 import { Item } from '../interfaces';
+import { deleteAllImagesByItemId } from '../db/queries/image';
 
 const itemSchema = Joi.object({
   name: Joi.string().min(3).max(100).required(),
 
-  price: Joi.number().min(0).required(),
+  price: Joi.number().min(0).max(1000000).required(),
 
   description: Joi.string().min(3).max(1000).required(),
 
   is_published: Joi.boolean().required(),
 });
 
-const getAllItemsController = async (ctx: Koa.Context) => {
-  ctx.response.body = await getAllItems(ctx);
+const getAllItemsPaginationController = async (ctx: Koa.Context) => {
+  const queryParams = ctx.request.query;
+  ctx.response.body = await getPaginationData(ctx, queryParams);
+};
+
+const getAllItemsPaginationPublishedController = async (ctx: Koa.Context) => {
+  const queryParams = ctx.request.query;
+  ctx.response.body = await getPaginationDataPublished(ctx, queryParams);
 };
 
 const getItemByIdController = async (ctx: Koa.Context) => {
@@ -86,6 +92,7 @@ const editItemController = async (ctx: Koa.Context) => {
 
 const deleteItemController = async (ctx: Koa.Context) => {
   const id = Number(ctx.params.itemId);
+  await deleteAllImagesByItemId(ctx, id);
   const res = await deleteItem(ctx, id);
   if (res) {
     ctx.response.body = {
@@ -99,14 +106,9 @@ const deleteItemController = async (ctx: Koa.Context) => {
   }
 };
 
-const getAllItemsPaginationController = async (ctx: Koa.Context) => {
-  const queryParams = ctx.request.query;
-  ctx.response.body = await getPaginationData(ctx, queryParams);
-};
-
 const itemControllers = {
-  getAllItemsController,
   getAllItemsPaginationController,
+  getAllItemsPaginationPublishedController,
   getItemByIdController,
   createItemController,
   editItemController,

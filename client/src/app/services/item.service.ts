@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Item } from '../models/item.model';
 
 const baseUrl = 'http://localhost:8080/api/v1/items';
 
@@ -14,6 +13,10 @@ export class ItemService {
 
   getAll(params: any): Observable<any> {
     return this.http.get<any>(baseUrl, { params });
+  }
+
+  getAllPublished(params: any): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/published`, { params });
   }
 
   get(id: any): Observable<any> {
@@ -30,9 +33,5 @@ export class ItemService {
 
   delete(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
-  }
-
-  findByName(name: any): Observable<Item[]> {
-    return this.http.get<Item[]>(`${baseUrl}?name=${name}`);
   }
 }

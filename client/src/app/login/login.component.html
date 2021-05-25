@@ -1,85 +1,103 @@
-<div class="col-md-12">
-  <div class="card card-container">
-    <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    />
-    <form
-      *ngIf="!isLoggedIn"
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="text"
-          autocomplete="email"
-          class="form-control"
-          name="email"
-          [(ngModel)]="form.email"
-          required
-          #email="ngModel"
-        />
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="email.errors && f.submitted"
-        >
-          Email is required!
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          autocomplete="current-password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="6"
-          maxlength="50"
-          #password="ngModel"
-          pattern="^[a-zA-Z0-9]{6,50}$"
-        />
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="password.errors && f.submitted"
-        >
-          <div *ngIf="password.errors.required">Password is required</div>
-          <div *ngIf="password.errors.minlength">
-            Password must be at least 6 characters
-          </div>
-          <div *ngIf="password.errors.maxlength">
-            Password must be at most 50 characters
-          </div>
-          <div *ngIf="password.errors.pattern">
-            Password can only contain upper and lowercase letters and numbers
+<section class="login_part section_padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="login_part_text text-center">
+          <div class="login_part_text_iner">
+            <h2>New to our Shop?</h2>
+            <p>
+              There are advances being made in science and technology everyday,
+              and a good example of this is the
+            </p>
+            <a href="/register" class="btn_3">Create an Account</a>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-block">
-          Login
-        </button>
-      </div>
-      <div class="form-group">
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="f.submitted && isLoginFailed"
-        >
-          Login failed: {{ errorMessage }}
+      <div class="col-lg-6 col-md-12">
+        <div class="login_part_form">
+          <div class="login_part_form_iner">
+            <h3>
+              Welcome back! <br />
+              Please, Sign in
+            </h3>
+            <form
+              class="row"
+              *ngIf="!isLoggedIn"
+              name="form"
+              (ngSubmit)="f.form.valid && onSubmit()"
+              #f="ngForm"
+              novalidate
+            >
+              <div class="col-md-12 form-group p_star">
+                <input
+                  type="email"
+                  autocomplete="email"
+                  placeholder="Email"
+                  class="form-control"
+                  name="email"
+                  [(ngModel)]="form.email"
+                  required
+                  #email="ngModel"
+                  ngModel email
+                />
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="email.errors && f.submitted"
+                >
+                <div *ngIf="email.errors.required">
+                  Email is required.
+                </div>
+                <div *ngIf="email.errors.email">
+                  Please, enter correct email.
+                </div>
+                </div>
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <input
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Password"
+                  class="form-control"
+                  name="password"
+                  [(ngModel)]="form.password"
+                  required
+                  minlength="6"
+                  maxlength="50"
+                  #password="ngModel"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}"
+                />
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="password.errors && f.submitted"
+                >
+                  <div *ngIf="password.errors.required">
+                    Password is required.
+                  </div>
+                  <div *ngIf="password.errors.pattern">
+                    Invalid password.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 form-group">
+                <button class="btn btn_3" [disabled]="f.submitted && !f.valid">
+                  log in
+                </button>
+              </div>
+              <div class="col-md-12 form-group">
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="f.submitted && isLoginFailed"
+                >
+                  Login failed: {{ errorMessage }}
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </form>
-
-    <div class="alert alert-success" *ngIf="isLoggedIn">
-      Logged in as {{ role }}.
     </div>
   </div>
-</div>
+</section>

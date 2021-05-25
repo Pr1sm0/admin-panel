@@ -3,13 +3,13 @@ import { returnMany, returnSingle } from './templates';
 import * as Koa from 'koa';
 
 export const getAllImagesByItemId = (ctx: Koa.Context, itemId: number) => {
-  const query = "SELECT * FROM images WHERE item_id=$1 AND size='large'";
+  const query = "SELECT image_url FROM images WHERE item_id=$1 AND size='large'";
   const values = [itemId];
   return returnMany(ctx, query, values);
 };
 
 export const getImageByItemId = (ctx: Koa.Context, itemId: number) => {
-  const query = "SELECT image_url FROM images WHERE item_id=$1 AND size='large' ORDER BY id LIMIT 1";
+  const query = "SELECT image_url FROM images WHERE item_id=$1 AND size='small' ORDER BY id LIMIT 1";
   const values = [itemId];
   return returnSingle(ctx, query, values);
 };

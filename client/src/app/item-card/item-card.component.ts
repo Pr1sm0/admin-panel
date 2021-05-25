@@ -1,17 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ImageService } from 'src/app/_services/image.service';
+import { ImageService } from 'src/app/services/image.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-item-card',
   templateUrl: './item-card.component.html',
-  styleUrls: ['./item-card.component.sass']
+  styleUrls: ['./item-card.component.scss'],
 })
 export class ItemCardComponent implements OnInit {
-
   @Input() item: any;
-  image_url: string = "";
+  image_url: string = '';
+  localServerUrl = environment.LOCAL_SERVER_URL;
 
-  constructor(private imageService: ImageService) { }
+  constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
     this.getImage(this.item.id);
@@ -20,17 +21,13 @@ export class ItemCardComponent implements OnInit {
   getImage(itemId: string): void {
     this.imageService.get(itemId).subscribe(
       (data) => {
-        if(data){
-          this.image_url = data.image_url;
+        if (data) {
+          this.image_url = `${this.localServerUrl}${data.image_url}`;
         } else {
-          this.image_url = 'http://localhost:8080/images/default_product_photo.png';
+          this.image_url = `${this.localServerUrl}/images/default_product_photo.png`;
         }
-        console.log(data);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => error
     );
   }
-
 }

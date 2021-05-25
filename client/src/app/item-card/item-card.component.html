@@ -1,5 +1,9 @@
-<div routerLink="/items/{{item?.id}}">
-  <h2>{{ item?.name }}</h2>
-  <img [src]="image_url" />
+<div routerLink="/items/{{ item?.id }}" class="single-item mb-50 text-center card">
+  <div class="item-image">
+    <img [src]="image_url" />
+  </div>
+  <div class="item-caption">
+    <h3>{{ item.name }}</h3>
+    <div>{{ item.price | currency }}</div>
+  </div>
 </div>
-

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from 'src/app/_services/item.service';
+import { ItemService } from 'src/app/services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/models/item.model';
+import {Location} from '@angular/common';
 
 @Component({
-  selector: 'app-item-details',
-  templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.sass'],
+  selector: 'app-item-edit',
+  templateUrl: './item-edit.component.html',
+  styleUrls: ['./item-edit.component.scss'],
 })
-export class ItemDetailsComponent implements OnInit {
+export class ItemEditComponent implements OnInit {
   currentItem: Item = {
     name: '',
     price: 0,
@@ -16,11 +17,14 @@ export class ItemDetailsComponent implements OnInit {
     is_published: false,
   };
   message = '';
+  isUpdateFailed = false;
+  isSuccessful = false;
 
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
@@ -32,22 +36,20 @@ export class ItemDetailsComponent implements OnInit {
     this.itemService.get(id).subscribe(
       (data) => {
         this.currentItem = data;
-        console.log(data);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => error
     );
   }
 
   updateItem(): void {
     this.itemService.update(this.currentItem.id, this.currentItem).subscribe(
       (response) => {
-        console.log(response);
+        this.isUpdateFailed = false;
+        this.isSuccessful = true;
         this.message = response.message;
       },
       (error) => {
-        console.log(error);
+        this.isUpdateFailed = true;
         this.message = error.error;
       }
     );
@@ -56,13 +58,15 @@ export class ItemDetailsComponent implements OnInit {
   deleteItem(): void {
     this.itemService.delete(this.currentItem.id).subscribe(
       (response) => {
-        console.log(response);
         this.router.navigate(['/items']);
       },
       (error) => {
-        console.log(error);
         this.message = error.error;
       }
     );
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }

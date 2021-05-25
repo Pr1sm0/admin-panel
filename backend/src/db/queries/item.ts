@@ -2,11 +2,6 @@ import { Item } from '../../interfaces';
 import { returnMany, returnSingle } from './templates';
 import * as Koa from 'koa';
 
-export const getAllItems = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items';
-  return returnMany(ctx, query);
-};
-
 export const getItem = (ctx: Koa.Context, id: number) => {
   const query = 'SELECT * FROM items WHERE id=$1';
   const values = [id];
@@ -41,42 +36,6 @@ export const deleteItem = (ctx: Koa.Context, id: number) => {
   return returnSingle(ctx, query, values);
 };
 
-export const sortItemsByNameAsc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY name';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByNameDesc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY name DESC';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByPriceAsc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY price';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByPriceDesc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY price DESC';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByDateAsc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY created_at';
-  return returnMany(ctx, query);
-};
-
-export const sortItemsByDateDesc = (ctx: Koa.Context) => {
-  const query = 'SELECT * FROM items ORDER BY created_at DESC';
-  return returnMany(ctx, query);
-};
-
-export const findItemsByName = (ctx: Koa.Context, name: string) => {
-  const query = "SELECT * FROM items WHERE name LIKE '%$1%'";
-  const values = [name];
-  return returnMany(ctx, query, values);
-};
-
 export const countAllItemsWithPagination = async (ctx: Koa.Context, condition: string) => {
   const query = 'SELECT count(*) FROM items WHERE name LIKE $1';
   const values = [condition];
@@ -92,6 +51,25 @@ export const getAllItemsWithPagination = (
 ) => {
   const query =
     'SELECT * FROM items WHERE name LIKE $1 ORDER BY id DESC LIMIT $2 OFFSET $3';
+  const values = [nameCondition, limit, offset];
+  return returnMany(ctx, query, values);
+};
+
+export const countAllItemsWithPaginationPublished = async (ctx: Koa.Context, condition: string) => {
+  const query = "SELECT count(*) FROM items WHERE name LIKE $1 AND is_published='true'";
+  const values = [condition];
+  const count = await returnSingle(ctx, query, values);
+  return count.count;
+};
+
+export const getAllItemsWithPaginationPublished = (
+  ctx: Koa.Context,
+  nameCondition: string,
+  limit: number,
+  offset: number,
+) => {
+  const query =
+    "SELECT * FROM items WHERE name LIKE $1 AND is_published='true' ORDER BY id DESC LIMIT $2 OFFSET $3";
   const values = [nameCondition, limit, offset];
   return returnMany(ctx, query, values);
 };

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { TokenStorageService } from '../_services/token-storage.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   form: any = {

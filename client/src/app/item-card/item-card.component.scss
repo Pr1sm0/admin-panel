@@ -1,0 +1,23 @@
+.mb-50 {
+  margin-bottom: 30px;
+  transition: .5s;
+}
+
+.single-item .item-image {
+  overflow: hidden;
+  margin-bottom: 19px;
+  position: relative;
+}
+
+.single-item .item-image img {
+  width: 100%;
+}
+
+.card:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.item-caption {
+  padding-bottom: 20px;
+}

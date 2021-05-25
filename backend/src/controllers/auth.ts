@@ -10,13 +10,13 @@ const userSchema = Joi.object({
 
   email: Joi.string().email().required(),
 
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,50}$')).required(),
+  password: Joi.string().pattern(new RegExp('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}')).required(),
 });
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
 
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,50}$')).required(),
+  password: Joi.string().pattern(new RegExp('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}')).required(),
 });
 
 const signupController = async (ctx: Koa.Context) => {

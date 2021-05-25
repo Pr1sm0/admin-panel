@@ -1,0 +1,130 @@
+.section_padding {
+  padding: 60px 0;
+}
+
+.register_part .register_part_text {
+  background-image: -moz-linear-gradient(
+    90deg,
+    #b08ead 0%,
+    #4b3049 64%,
+    #b08ead 100%
+  );
+  background-image: -webkit-linear-gradient(
+    90deg,
+    #b08ead 0%,
+    #4b3049 64%,
+    #b08ead 100%
+  );
+  background-image: linear-gradient(
+    90deg,
+    #b08ead 0%,
+    #4b3049 64%,
+    #b08ead 100%
+  );
+  background-size: 200% auto;
+}
+
+.register_part .register_part_text, .register_part .register_part_form {
+  padding: 80px 70px;
+  height: 600px;
+  display: table;
+}
+
+.register_part .register_part_text .register_part_text_iner, .register_part .register_part_text .register_part_form_iner, .register_part .register_part_form .register_part_text_iner, .register_part .register_part_form .register_part_form_iner {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.register_part .register_part_text h2 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 35px;
+  color: #fff;
+  margin-bottom: 17px;
+}
+
+.register_part .register_part_text p {
+  color: #fff;
+  line-height: 25px;
+}
+
+.register_part .register_part_text .btn_3 {
+  border: 1px solid #fff;
+  background-color: transparent;
+  font-size: 14px;
+  margin-top: 28px;
+  color: #fff;
+}
+
+.btn_3 {
+  display: inline-block;
+  padding: 18px 36px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #2577fd;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2577fd;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn_3:hover {
+  background-color: #2577fd;
+  color: #fff;
+}
+
+.register_part .register_part_form h3 {
+  font-size: 26px;
+  line-height: 36px;
+  font-weight: 700;
+  margin-bottom: 80px;
+}
+
+.register_part .form-group .btn_3 {
+  display: block;
+  width: 100%;
+  margin: 30px 0 17px;
+}
+
+.p_star {
+  display: inline-block;
+  position: relative;
+}
+
+.register_part .register_part_form .form-control {
+  border: 0 solid transparent;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+}
+
+.p_star input {
+  background: #fff;
+}
+
+.register_part .register_part_form .form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #2577fd;
+  outline: 0;
+  box-shadow: none;
+}
+
+.register_part .register_part_text .btn_3:hover {
+  background-color: #fff;
+  color: #ff2020;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+}
+
+.alert.alert-danger {
+  margin-top: 10px;
+}
