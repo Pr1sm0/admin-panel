@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ImageService } from 'src/app/services/image.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-item-card',
@@ -9,6 +10,7 @@ import { ImageService } from 'src/app/services/image.service';
 export class ItemCardComponent implements OnInit {
   @Input() item: any;
   image_url: string = '';
+  localServerUrl = environment.LOCAL_SERVER_URL;
 
   constructor(private imageService: ImageService) {}
 
@@ -20,10 +22,9 @@ export class ItemCardComponent implements OnInit {
     this.imageService.get(itemId).subscribe(
       (data) => {
         if (data) {
-          this.image_url = data.image_url;
+          this.image_url = `${this.localServerUrl}${data.image_url}`;
         } else {
-          this.image_url =
-            'http://localhost:8080/images/default_product_photo.png';
+          this.image_url = `${this.localServerUrl}/images/default_product_photo.png`;
         }
       },
       (error) => error

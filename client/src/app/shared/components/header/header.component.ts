@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   showAdminFeatures = false;
   name?: string;
-  isCollapsed = false;
+  isCollapsed = true;
 
   constructor(private tokenStorageService: TokenStorageService) {}
 

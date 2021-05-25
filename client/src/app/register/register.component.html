@@ -1,7 +1,7 @@
 <section class="register_part section_padding">
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6 col-md-12">
         <div class="register_part_text text-center">
           <div class="register_part_text_iner">
             <h2>Have an account?</h2>
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6 col-md-12">
         <div class="register_part_form">
           <div class="register_part_form_iner">
             <h3>Create a new account</h3>
@@ -78,7 +78,7 @@
                   minlength="6"
                   maxlength="50"
                   #password="ngModel"
-                  pattern="^[a-zA-Z0-9]{6,50}$"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,50}"
                 />
                 <div
                   class="alert alert-danger"
@@ -87,15 +87,8 @@
                   <div *ngIf="password.errors.required">
                     Password is required.
                   </div>
-                  <div *ngIf="password.errors.minlength">
-                    Password must be at least 6 characters.
-                  </div>
-                  <div *ngIf="password.errors.maxlength">
-                    Password must be at most 50 characters.
-                  </div>
                   <div *ngIf="password.errors.pattern">
-                    Password can only contain upper and lowercase letters and
-                    numbers.
+                    Password must contain at least one number and one uppercase and lowercase letter, and 8 to 50 characters.
                   </div>
                 </div>
               </div>

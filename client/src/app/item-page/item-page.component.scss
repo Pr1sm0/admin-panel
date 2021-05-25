@@ -1,4 +1,66 @@
 ngb-carousel {
-  width: 640px;
-  background-color: black;
+  outline: 0;
+}
+
+.btn_3 {
+  display: inline-block;
+  padding: 18px 36px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #2577fd;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2577fd;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+  margin-right: 20px;
+  outline: 0;
+
+  &.edit {
+    color: orange;
+    border-color: orange;
+  }
+}
+
+.btn_3:hover {
+  background-color: #2577fd;
+  color: #fff;
+}
+
+.btn_3.edit:hover {
+  background-color: orange;
+  color: #fff;
+}
+
+a:focus, a:hover {
+  text-decoration: none;
+}
+
+.price {
+  font-size: 32px;
+}
+
+.product-name {
+  margin-bottom: 40px;
+}
+
+.price {
+  margin: 40px 0;
+}
+
+.description h4 {
+  margin: 40px 0 20px 0;
+}
+
+.admin-info {
+  margin-bottom: 40px;
+}
+
+.default-image img {
+  height: 320px;
+  width: 320px;
 }

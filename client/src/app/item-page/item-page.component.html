@@ -1,52 +1,68 @@
-<img *ngIf="!images[0]" [src]="default_image" />
-<div class="col-md-6">
-  <div *ngIf="currentItem">
-    <h4>Item</h4>
-    <div>
-      <label><strong>Name:</strong></label> {{ currentItem.name }}
-    </div>
-    <div>
-      <label><strong>Price:</strong></label>
-      {{ currentItem.price | currency }}
-    </div>
-    <div>
-      <label><strong>Description:</strong></label>
-      {{ currentItem.description }}
-    </div>
-    <div *ngIf="isAdmin">
-      <label><strong>Created At:</strong></label>
-      {{ currentItem.created_at | date: "medium" }}
-    </div>
-    <div *ngIf="isAdmin">
-      <label><strong>Updated At:</strong></label>
-      {{ currentItem.updated_at | date: "medium" }}
-    </div>
-    <div *ngIf="isAdmin">
-      <label><strong>Status:</strong></label>
-      {{ currentItem.is_published ? "Published" : "Unpublished" }}
+<div class="container">
+  <div *ngIf="currentItem" class="product-name">
+    <h2>{{ currentItem.name }}</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <div *ngIf="currentItem">
+        <ngb-carousel *ngIf="images[0]">
+          <ng-template ngbSlide *ngFor="let image of images">
+            <div class="picsum-img-wrapper d-flex justify-content-center">
+              <img
+                [src]="localServerUrl + image.image_url"
+                alt="Product Image"
+              />
+            </div>
+          </ng-template>
+        </ngb-carousel>
+        <div class="default-image">
+          <img *ngIf="!images[0]" [src]="default_image" />
+        </div>
+        <div class="description">
+          <h4>Description</h4>
+          <div>
+            {{ currentItem.description }}
+          </div>
+        </div>
+      </div>
     </div>
 
-    <a
-      class="badge badge-warning"
-      routerLink="/items/{{ currentItem.id }}/edit"
-      *ngIf="isAdmin"
-    >
-      Edit
-    </a>
-    <a
-      class="badge badge-warning"
-      routerLink="/{{ currentItem.id }}/add-image"
-      *ngIf="isAdmin"
-    >
-      Add image
-    </a>
+    <div class="col-md-5">
+      <div *ngIf="currentItem">
+        <div class="price">
+          {{ currentItem.price | currency }}
+        </div>
+      </div>
+      <div *ngIf="isAdmin && currentItem" class="admin-info">
+        <div>
+          <label><strong>Created At:</strong></label>
+          {{ currentItem.created_at | date: "medium" }}
+        </div>
+        <div>
+          <label><strong>Updated At:</strong></label>
+          {{ currentItem.updated_at | date: "medium" }}
+        </div>
+        <div>
+          <label><strong>Status:</strong></label>
+          {{ currentItem.is_published ? "Published" : "Unpublished" }}
+        </div>
+      </div>
+      <div *ngIf="isAdmin && currentItem" class="admin-buttons">
+        <button
+          class="btn_3 edit"
+          routerLink="/items/{{ currentItem.id }}/edit"
+          *ngIf="isAdmin"
+        >
+          Edit
+        </button>
+        <button
+          class="btn_3"
+          routerLink="/{{ currentItem.id }}/add-image"
+          *ngIf="isAdmin"
+        >
+          Add image
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
-<ngb-carousel *ngIf="images[0]">
-  <ng-template ngbSlide *ngFor="let image of images">
-    <div class="picsum-img-wrapper d-flex justify-content-center">
-      <img [src]="image.image_url" alt="Product Image" />
-    </div>
-  </ng-template>
-</ngb-carousel>

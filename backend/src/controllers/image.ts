@@ -7,17 +7,17 @@ import { Image } from '../interfaces';
 const addImageController = async (ctx: Koa.Context) => {
   const originalImage: Image = ctx.request.body;
   originalImage.size = 'original';
-  originalImage.image_url = `http://localhost:8080/images/original/${ctx.request.file.filename}`;
+  originalImage.image_url = `/images/original/${ctx.request.file.filename}`;
   const res = await addImage(ctx, originalImage);
 
   const largeImage: Image = ctx.request.body;
   largeImage.size = 'large';
-  largeImage.image_url = `http://localhost:8080/images/large/${ctx.request.body.images.largeImageName}`;
+  largeImage.image_url = `/images/large/${ctx.request.body.images.largeImageName}`;
   await addImage(ctx, largeImage);
 
   const smallImage: Image = ctx.request.body;
   smallImage.size = 'small';
-  smallImage.image_url = `http://localhost:8080/images/small/${ctx.request.body.images.smallImageName}`;
+  smallImage.image_url = `/images/small/${ctx.request.body.images.smallImageName}`;
   await addImage(ctx, smallImage);
 
   if (res) {

@@ -6,6 +6,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Item } from '../models/item.model';
 import { Image } from '../models/image.model';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-item-page',
@@ -25,7 +26,8 @@ export class ItemPageComponent implements OnInit {
   isLoggedIn = false;
   role = '';
   images: Image[] = [];
-  default_image: string = 'http://localhost:8080/images/default_product_photo.png';
+  localServerUrl = environment.LOCAL_SERVER_URL;
+  default_image: string = `${this.localServerUrl}/images/default_product_photo.png`;
   
   constructor(
     private itemService: ItemService,

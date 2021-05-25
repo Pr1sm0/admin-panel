@@ -19,6 +19,7 @@ import { ItemPageComponent } from './item-page/item-page.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     ItemPageComponent,
     HeaderComponent,
     FooterComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

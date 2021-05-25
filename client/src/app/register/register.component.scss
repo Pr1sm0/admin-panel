@@ -71,6 +71,7 @@
   -moz-transition: .5s;
   -o-transition: .5s;
   transition: .5s;
+  outline: 0;
 }
 
 .btn_3:hover {
@@ -106,10 +107,10 @@
   background: #fff;
 }
 
-.form-control:focus {
+.register_part .register_part_form .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #ddd;
+  border-color: #2577fd;
   outline: 0;
   box-shadow: none;
 }
