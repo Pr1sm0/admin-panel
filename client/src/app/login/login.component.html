@@ -81,7 +81,7 @@
                 </div>
               </div>
               <div class="col-md-12 form-group">
-                <button class="btn_3">
+                <button class="btn btn_3" [disabled]="f.submitted && !f.valid">
                   log in
                 </button>
               </div>

@@ -14,6 +14,8 @@ import { ItemEditComponent } from './item-edit/item-edit.component';
 import { ItemListComponent } from './item-list/item-list.component';
 
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { AdminRoutesGuard } from './helpers/admin-routes.guard';
+import { UserRoutesGuard } from './helpers/user-routes.guard';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { ItemPageComponent } from './item-page/item-page.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -44,7 +46,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NgxPaginationModule,
     NgbModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, AdminRoutesGuard, UserRoutesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

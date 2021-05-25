@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemService } from 'src/app/services/item.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/models/item.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-item-edit',
@@ -22,7 +23,8 @@ export class ItemEditComponent implements OnInit {
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
@@ -62,5 +64,9 @@ export class ItemEditComponent implements OnInit {
         this.message = error.error;
       }
     );
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }

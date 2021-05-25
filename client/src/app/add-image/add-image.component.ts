@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from 'src/app/services/image.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-add-image',
@@ -10,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddImageComponent implements OnInit {
   image = {
     size: 'original',
-    item_id: this.route.snapshot.params.itemId,
+    item_id: this.route.snapshot.params.id,
     image_url: '',
   };
   selectedFile: any;
@@ -20,7 +21,8 @@ export class AddImageComponent implements OnInit {
   constructor(
     private imageService: ImageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _location: Location
   ) {}
 
   ngOnInit(): void {
@@ -58,5 +60,9 @@ export class AddImageComponent implements OnInit {
     } else {
       this.message = 'Please, select an image to upload!';
     }
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }

@@ -9,8 +9,11 @@
       accept="image/png, image/jpeg"
       #fileInput
     />
-    <button class="btn_3" (click)="fileInput.click()">Select Image</button>
-    <button class="btn_3" (click)="saveImage()">Upload!</button>
+    <div class="col-md-12 buttons">
+      <button class="btn_3" (click)="backClicked()">Go back</button>
+      <button class="btn_3" (click)="fileInput.click()">Select Image</button>
+      <button class="btn_3" (click)="saveImage()">Upload!</button>
+    </div>
     <p>{{ message }}</p>
     <p>Preview:</p>
     <div class="img-container">

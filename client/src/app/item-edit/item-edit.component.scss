@@ -27,6 +27,7 @@
   -o-transition: .5s;
   transition: .5s;
   outline: 0;
+  box-shadow: none;
 }
 
 .btn_3:hover {
@@ -49,6 +50,8 @@
   -moz-transition: .5s;
   -o-transition: .5s;
   transition: .5s;
+  outline: 0;
+  box-shadow: none;
 }
 
 .btn_4:hover {
@@ -106,6 +109,6 @@ a:focus, a:hover {
   text-decoration: none;
 }
 
-.alert.alert-danger {
+.alert {
   margin-top: 10px;
 }
