@@ -15,6 +15,7 @@ export class ItemListComponent implements OnInit {
   items: Item[] = [];
   currentItem?: Item;
   name = '';
+  message = '';
 
   page = 1;
   count = 0;
@@ -34,6 +35,7 @@ export class ItemListComponent implements OnInit {
       this.isAdmin = this.role.includes('admin');
     }
     this.retrieveItems();
+    this.message = window.history.state.successMessage;
   }
 
   getRequestParams(searchName: string, page: number, pageSize: number): any {

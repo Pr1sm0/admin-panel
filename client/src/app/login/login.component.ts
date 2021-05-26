@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   errorMessage = '';
   role: string = '';
+  message = '';
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.role = this.tokenStorage.getUser().role;
     }
+    this.message = window.history.state.successMessage;
   }
 
   onSubmit(): void {
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
           role: data.role,
           email: data.email
         }
+
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(user);
 

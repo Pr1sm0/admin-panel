@@ -19,6 +19,7 @@ export class ItemEditComponent implements OnInit {
   message = '';
   isUpdateFailed = false;
   isSuccessful = false;
+  state = '';
 
   constructor(
     private itemService: ItemService,
@@ -58,7 +59,10 @@ export class ItemEditComponent implements OnInit {
   deleteItem(): void {
     this.itemService.delete(this.currentItem.id).subscribe(
       (response) => {
-        this.router.navigate(['/items']);
+        this.message = response.message;
+        this.router.navigate(['/items'], {
+          state: { successMessage: this.message },
+        });
       },
       (error) => {
         this.message = error.error;

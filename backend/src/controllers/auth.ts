@@ -23,7 +23,17 @@ const signupController = async (ctx: Koa.Context) => {
   try {
     const user: User = ctx.request.body;
     const validatedUser = await userSchema.validateAsync(user);
-    ctx.response.body = await signup(ctx, validatedUser);
+    const res = await signup(ctx, validatedUser);
+    if (res) {
+      ctx.response.body = {
+        res,
+        message: 'Sign Up is successful.',
+      };
+    } else {
+      ctx.response.body = {
+        message: 'Cannot sign up.',
+      };
+    }
   } catch (err) {
     ctx.throw(err.status, err);
   }
