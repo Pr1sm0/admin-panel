@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="alert alert-success" *ngIf="message">
+    {{ message }}
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name..."
+          [(ngModel)]="name"
+        />
+        <div class="input-group-append">
+          <button class="btn btn_3" type="button" (click)="retrieveItems()">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 pagination-controls">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        [responsive]="true"
+        (pageChange)="handlePageChange($event)"
+        *ngIf="items[0]"
+      ></pagination-controls>
+    </div>
+
+    <div class="row w-100">
+      <div *ngIf="!items[0]" class="no-products-message">
+        <p>No products found.</p>
+      </div>
+
+      <app-item-card
+        class="col-xl-4 col-lg-4 col-md-6 col-sm-6"
+        *ngFor="
+          let item of items
+            | paginate
+              : {
+                  itemsPerPage: pageSize,
+                  currentPage: page,
+                  totalItems: count
+                }
+        "
+        [item]="item"
+      ></app-item-card>
+    </div>
+  </div>
+</div>

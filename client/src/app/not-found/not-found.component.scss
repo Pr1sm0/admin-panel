@@ -1,0 +1,27 @@
+.btn_3 {
+  display: inline-block;
+  padding: 18px 36px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #2577fd;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2577fd;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+  transition: .5s;
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn_3:hover {
+  background-color: #2577fd;
+  color: #fff;
+}
+
+h2 {
+  margin-bottom: 40px;
+}

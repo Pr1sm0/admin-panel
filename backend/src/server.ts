@@ -3,9 +3,8 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const PORT: number = Number(process.env.PORT) || 8000;
+const PORT: number = Number(process.env.PORT) || 8080;
 
-// Listen to the port
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 });

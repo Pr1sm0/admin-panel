@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-md-6">
+      <div class="add_part_form">
+        <div class="add_part_form_iner">
+          <h4>Add product</h4>
+          <form
+            class="row"
+            *ngIf="!submitted"
+            name="form"
+            (ngSubmit)="f.form.valid && saveItem()"
+            #f="ngForm"
+            novalidate
+          >
+            <div class="col-md-12 form-group p_star">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                required
+                [(ngModel)]="item.name"
+                name="name"
+                #name="ngModel"
+                minlength="3"
+                maxlength="100"
+              />
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="name.errors && f.submitted"
+              >
+                <div *ngIf="name.errors.required">Name is required!</div>
+                <div *ngIf="name.errors.minlength">
+                  Name must have at least 3 characters
+                </div>
+                <div *ngIf="name.errors.maxlength">
+                  Name must have at most 100 characters
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 form-group p_star">
+              <label for="price">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                id="price"
+                required
+                [(ngModel)]="item.price"
+                name="price"
+                min="0"
+                max="1000000"
+                step="0.01"
+                #price="ngModel"
+              />
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="price.errors && f.submitted"
+              >
+                <div *ngIf="price.errors.required">Price is required!</div>
+                <div *ngIf="price.errors.min">
+                  Price must be a positive number!
+                </div>
+                <div *ngIf="price.errors.max">Price is too large!</div>
+              </div>
+            </div>
+
+            <div class="col-md-12 form-group p_star">
+              <label for="description">Description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                required
+                [(ngModel)]="item.description"
+                name="description"
+                rows="6"
+                #description="ngModel"
+                minlength="3"
+                maxlength="1000"
+              ></textarea>
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="description.errors && f.submitted"
+              >
+                <div *ngIf="description.errors.required">
+                  Description is required!
+                </div>
+                <div *ngIf="description.errors.minlength">
+                  Description must have at least 3 characters
+                </div>
+                <div *ngIf="description.errors.maxlength">
+                  Description must have at most 1000 characters
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 form-group p_star">
+              <label for="is_published">Publish</label>
+              <input
+                type="checkbox"
+                class="form-control"
+                id="is_published"
+                [(ngModel)]="item.is_published"
+                name="is_published"
+                #is_published="ngModel"
+              />
+            </div>
+            <div class="col-md-12 form-group">
+              <button type="submit" class="btn_3">Submit</button>
+            </div>
+
+            <div class="col-md-12 form-group">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="f.submitted && isSubmitFailed"
+              >
+                {{ message }}
+              </div>
+              <div class="alert alert-success" *ngIf="isSuccessful">
+                {{ message }}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
