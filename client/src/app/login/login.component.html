@@ -1,5 +1,8 @@
 <section class="login_part section_padding">
   <div class="container">
+    <div class="alert alert-success" *ngIf="message">
+      {{ message }}
+    </div>
     <div class="row">
       <div class="col-lg-6 col-md-12">
         <div class="login_part_text text-center">

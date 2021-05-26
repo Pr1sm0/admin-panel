@@ -1,9 +1,27 @@
-<div routerLink="/items/{{ item?.id }}" class="single-item mb-50 text-center card">
-  <div class="item-image">
-    <img [src]="image_url" />
+<div class="single-item mb-50 text-center card">
+  <div class="card-overlay" *ngIf="isAdmin">
+    <button
+      class="btn_3"
+      *ngIf="item.is_published"
+      (click)="updatePublished(false)"
+    >
+      Published
+    </button>
+    <button
+      *ngIf="!item.is_published"
+      class="btn_4"
+      (click)="updatePublished(true)"
+    >
+      Unpublished
+    </button>
   </div>
-  <div class="item-caption">
-    <h3>{{ item.name }}</h3>
-    <div>{{ item.price | currency }}</div>
+  <div routerLink="/items/{{ item?.id }}">
+    <div class="item-image">
+      <img [src]="image_url" />
+    </div>
+    <div class="item-caption">
+      <h3>{{ item.name }}</h3>
+      <div>{{ item.price | currency }}</div>
+    </div>
   </div>
 </div>

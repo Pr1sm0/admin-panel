@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from 'src/app/services/item.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { ImageService } from 'src/app/services/image.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Item } from '../models/item.model';
@@ -34,7 +34,6 @@ export class ItemPageComponent implements OnInit {
     private imageService: ImageService,
     private tokenStorageService: TokenStorageService,
     private route: ActivatedRoute,
-    private router: Router,
     config: NgbCarouselConfig
   ) {
     config.interval = 0;

@@ -19,6 +19,7 @@ export class AddItemComponent implements OnInit {
   message = '';
   isSubmitFailed = false;
   isSuccessful = false;
+  state = '';
 
   constructor(private itemService: ItemService, private router: Router) {}
 
@@ -40,7 +41,10 @@ export class AddItemComponent implements OnInit {
         this.submitted = true;
         this.isSubmitFailed = false;
         this.isSuccessful = true;
-        this.router.navigate(['/items']);
+        this.message = response.message;
+        this.router.navigate(['/items'], {
+          state: { successMessage: this.message },
+        });
       },
       (error) => {
         this.isSubmitFailed = true;
